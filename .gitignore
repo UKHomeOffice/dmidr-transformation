@@ -8,7 +8,7 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 config.tfvars
 
-transformation/target
-transformation/dbt-env
-transformation/logs
-transformation/dbt_packages
+transformations/target
+transformations/dbt-env
+transformations/logs
+transformations/dbt_packages
