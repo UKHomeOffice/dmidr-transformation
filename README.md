@@ -18,6 +18,7 @@ brew install dbt-postgres
 ```
 ### 2. Run transformations
 ```sh
+cd transformations
 dbt run --profiles-dir ./profiles
 ```
 
