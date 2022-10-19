@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: cleaned_case_data
+    columns:
+      - name: timestamp
+        tests:
+          - not_null
+  - name: cases_due_by_day
+    columns:
+      - name: cases_due
+        tests:
+          - gt_zero
+      - name: deadline
+        tests:
+          - not_empty

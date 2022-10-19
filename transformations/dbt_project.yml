@@ -1,0 +1,6 @@
+name: 'rds_dbt_transformations'
+config-version: 2
+profile: 'rds_pg_case_studies'
+version: 1.0.0
+
+model-paths: [models]

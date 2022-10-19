@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: decs_raw
+    schema: public
+    description: Raw decs data
+    tables:
+      - name: case_data
+        columns:
+          - name: timestamp
+            tests:
+              - unique
+      - name: case_notes
+      - name: allocations

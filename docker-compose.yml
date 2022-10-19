@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  run-transformations:
+    container_name: ho_reporting_run_transformations
+    build: ./transformations
+    environment:
+      - DBT_ENVIRONMENT=not-prod
+      - DBT_DB_NAME=decs_plotly_target
+      - DBT_ENV_SECRET_PASSWORD=${target_password}
+      - DBT_USER=${target_username}
+      - DBT_HOST=${target_hostname}
+    depends_on:
+      test-source-data:
+        condition: service_completed_successfully
+    command: run
+    volumes:
+      - ./transformations:/usr/app/dbt
+      - ./transformations/profiles:/root/.dbt/
+  test-source-data:
+    container_name: test_source_data
+    build: ./transformations
+    environment:
+      - DBT_ENVIRONMENT=not-prod
+      - DBT_DB_NAME=decs_plotly_target
+      - DBT_ENV_SECRET_PASSWORD=${target_password}
+      - DBT_USER=${target_username}
+      - DBT_HOST=${target_hostname}
+    command: "test --select source:*"
+    volumes:
+      - ./transformations:/usr/app/dbt
+      - ./transformations/profiles:/root/.dbt/
+  test-transformations:
+    container_name: test_transformations
+    build: ./transformations
+    environment:
+      - DBT_ENVIRONMENT=testing-not-prod
+      - DBT_DB_NAME=decs_plotly_target
+      - DBT_ENV_SECRET_PASSWORD=${target_password}
+      - DBT_USER=${target_username}
+      - DBT_HOST=${target_hostname}
+    volumes:
+      - ./transformations:/usr/app/dbt
+      - ./transformations/profiles:/root/.dbt/
+    entrypoint: bash -c "dbt run --full-refresh && dbt test"
