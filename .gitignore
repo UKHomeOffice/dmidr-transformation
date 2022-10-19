@@ -1,13 +1,6 @@
 test-data/*
 .env
 
-terraform.tfstate
-terraform.tfstate.backup
-.terraform
-.terraform.tfstate.lock.info
-.terraform.lock.hcl
-config.tfvars
-
 transformations/target
 transformations/dbt-env
 transformations/logs
