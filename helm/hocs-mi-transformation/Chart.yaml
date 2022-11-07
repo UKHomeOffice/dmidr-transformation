@@ -1,4 +1,4 @@
 apiVersion: v2
 name: hocs-mi-transformation-helm
-description: A Helm chart to deploy a plotly dashboard app
+description: A Helm chart to deploy transformation job
 version: 1.0.0
