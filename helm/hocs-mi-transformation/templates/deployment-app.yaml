@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hocs-mi-dashboards
+  name: hocs-mi-transformation
   labels:
     version: {{ .Values.version }}
   annotations: {{- toYaml .Values.deployment.annotations | nindent 4 }}
@@ -11,13 +11,13 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      name: hocs-mi-dashboards
+      name: hocs-mi-transformation
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        name: hocs-mi-dashboards
+        name: hocs-mi-transformation
     spec:
       affinity:
         podAntiAffinity:
@@ -28,7 +28,7 @@ spec:
               - key: name
                 operator: In
                 values:
-                - hocs-mi-dashboards
+                - hocs-mi-transformation
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 100
             podAffinityTerm:
@@ -37,7 +37,7 @@ spec:
                 - key: name
                   operator: In
                   values:
-                  - hocs-mi-dashboards
+                  - hocs-mi-transformation
               topologyKey: failure-domain.beta.kubernetes.io/zone
       initContainers:
         {{- if .Values.truststore.enabled }}
@@ -51,8 +51,8 @@ spec:
       imagePullSecrets:
         - name: registrykey
       containers:
-        - name: hocs-mi-dashboards
-          image: 'quay.io/ukhomeofficedigital/hocs-mi-dashboards:{{ .Values.version }}'
+        - name: hocs-mi-transformation
+          image: 'quay.io/ukhomeofficedigital/hocs-mi-transformation:{{ .Values.version }}'
           resources: {{- toYaml .Values.app.resources | nindent 12 }}
           env: {{- tpl (toYaml .Values.app.env) . | nindent 12 }}
           livenessProbe:
@@ -122,7 +122,7 @@ spec:
       volumes:
         - name: certs
           secret:
-            secretName: hocs-mi-dashboards-service-tls-cmio
+            secretName: hocs-mi-transformation-service-tls-cmio
         - name: bundle
           configMap:
             name: bundle

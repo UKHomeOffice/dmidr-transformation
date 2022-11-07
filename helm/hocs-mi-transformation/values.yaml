@@ -165,6 +165,6 @@ ingress:
     enabled: false
   paths:
     - backend:
-        serviceName: hocs-mi-dashboards
+        serviceName: hocs-mi-transformation
         servicePort: 8050
       path: /

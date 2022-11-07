@@ -25,7 +25,7 @@ app:
 
 ingress:
   external:
-    host: hocs-mi-dashboards.mi-dev.cs-notprod.homeoffice.gov.uk
+    host: hocs-mi-transformation.mi-dev.cs-notprod.homeoffice.gov.uk
   internal:
     enabled: true
-    host: hocs-mi-dashboards.mi-dev.internal.cs-notprod.homeoffice.gov.uk
+    host: hocs-mi-transformation.mi-dev.internal.cs-notprod.homeoffice.gov.uk
