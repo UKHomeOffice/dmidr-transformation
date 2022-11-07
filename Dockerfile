@@ -21,4 +21,4 @@ RUN adduser -D -u 1001 dbt
 USER 1001
 
 WORKDIR /transformations
-ENTRYPOINT [ "dbt" ]
+ENTRYPOINT [ "echo", "hello world" ]
