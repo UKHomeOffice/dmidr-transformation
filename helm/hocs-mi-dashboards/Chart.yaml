@@ -1,0 +1,4 @@
+apiVersion: v2
+name: hocs-mi-dashboards-helm
+description: A Helm chart to deploy a plotly dashboard app
+version: 1.0.0

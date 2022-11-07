@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hocs-mi-dashboards
+  labels:
+    version: {{ .Values.version }}
+  annotations: {{- toYaml .Values.deployment.annotations | nindent 4 }}
+spec:
+  {{- if not .Values.autoscale.enabled }}
+  replicas: {{ .Values.deployment.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      name: hocs-mi-dashboards
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: hocs-mi-dashboards
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values:
+                - hocs-mi-dashboards
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - hocs-mi-dashboards
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+      initContainers:
+        {{- if .Values.truststore.enabled }}
+        - name: truststore
+          image: '{{ .Values.truststore.image.repository }}:{{ .Values.truststore.image.version }}'
+          securityContext: {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          args: {{- tpl (toYaml .Values.truststore.args) . | nindent 12 }}
+          volumeMounts: {{- toYaml .Values.truststore.volumeMounts | nindent 12 }}
+          resources: {{- toYaml .Values.truststore.resources | nindent 12 }}
+        {{- end }}
+      imagePullSecrets:
+        - name: registrykey
+      containers:
+        - name: hocs-mi-dashboards
+          image: 'quay.io/ukhomeofficedigital/hocs-mi-dashboards:{{ .Values.version }}'
+          resources: {{- toYaml .Values.app.resources | nindent 12 }}
+          env: {{- tpl (toYaml .Values.app.env) . | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8050
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 60
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8050
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - SETUID
+                - SETGID
+        {{- if .Values.proxy.enabled }}
+        - name: proxy
+          image: '{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.version }}'
+          securityContext: {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          env: {{- tpl (toYaml .Values.proxy.env) . | nindent 12 }}
+          volumeMounts: {{- toYaml .Values.proxy.volumeMounts | nindent 12 }}
+          ports:
+            - name: {{ .Values.service.portName }}
+              containerPort: {{ .Values.service.targetPort }}
+          resources: {{- toYaml .Values.proxy.resources | nindent 12 }}
+        {{- end }}
+        {{- if .Values.keycloak.enabled }}
+        - name: keycloak
+          image: '{{ .Values.keycloak.image.repository }}:{{ .Values.keycloak.image.version }}'
+          securityContext: {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          env: {{- tpl (toYaml .Values.keycloak.env) . | nindent 12 }}
+          args: {{- tpl (toYaml .Values.keycloak.args) . | nindent 12 }}
+          {{- if not .Values.ingress.internal.enabled }}
+            - --redirection-url=https://{{ .Values.keycloak.domain }}
+            - --cookie-domain={{ .Values.keycloak.domain }}
+          {{- end }}
+          volumeMounts: {{- toYaml .Values.keycloak.volumeMounts | nindent 12 }}
+          ports:
+            - name: {{ .Values.service.portName }}
+              containerPort: {{ .Values.keycloak.targetPort }}
+          resources: {{- toYaml .Values.keycloak.resources | nindent 12 }}
+        {{- end }}
+        {{- if .Values.keycloakApi.enabled }}
+        - name: keycloak-proxy-api
+          image: '{{ .Values.keycloak.image.repository }}:{{ .Values.keycloak.image.version }}'
+          securityContext: {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          env: {{- tpl (toYaml .Values.keycloak.env) . | nindent 12 }}
+          args: {{- tpl (toYaml .Values.keycloakApi.args) . | nindent 12 }}
+          {{- if not .Values.ingress.internal.enabled }}
+            - --redirection-url=https://{{ .Values.keycloak.domain }}
+            - --cookie-domain={{ .Values.keycloak.domain }}
+          {{- end }}
+          volumeMounts: {{- toYaml .Values.keycloak.volumeMounts | nindent 12 }}
+          ports:
+            - name: {{ .Values.service.portName }}
+              containerPort: {{ .Values.keycloakApi.targetPort }}
+          resources: {{- toYaml .Values.keycloak.resources | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: certs
+          secret:
+            secretName: hocs-mi-dashboards-service-tls-cmio
+        - name: bundle
+          configMap:
+            name: bundle
+        - name: config
+          configMap:
+           name: auth-proxy-config
+        - name: keystore
+          emptyDir:
+            medium: "Memory"

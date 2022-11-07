@@ -1,0 +1,3 @@
+[submodule "hocs-ci-infrastructure"]
+	path = hocs-ci-infrastructure
+	url = https://github.com/UKHomeOffice/hocs-ci-infrastructure.git

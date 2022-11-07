@@ -1,0 +1,170 @@
+---
+deployment:
+  annotations:
+    downscaler/downtime: 'Mon-Sun 00:00-05:00 Europe/London,Mon-Sun 23:00-24:00 Europe/London'
+app:
+  env:
+  - name: clientside
+    value: "1"
+  - name: isNotProd
+    value: "0"
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 768Mi
+    requests:
+      cpu: 200m
+      memory: 768Mi
+
+keycloak:
+  enabled: false
+  realm: https://sso.digital.homeoffice.gov.uk/auth/realms/hocs-prod
+  timeout: 60
+  domain: cs.homeoffice.gov.uk
+  image:
+    repository: quay.io/keycloak/keycloak-gatekeeper
+    version: 8.0.2
+  args:
+    - --config=/etc/secrets/data.yml
+    - --discovery-url={{ .Values.keycloak.realm }}
+    - --openid-provider-proxy=http://hocs-outbound-proxy.{{ .Release.Namespace }}.svc.cluster.local:31290
+    - --enable-logging=true
+    - --enable-json-logging=true
+    - --upstream-url=http://127.0.0.1:{{ include "hocs-app.port" . }}
+    - --upstream-response-header-timeout={{ .Values.keycloak.timeout }}s
+    - --upstream-expect-continue-timeout={{ .Values.keycloak.timeout }}s
+    - --upstream-keepalive-timeout={{ .Values.keycloak.timeout }}s
+    - --server-read-timeout={{ .Values.keycloak.timeout }}s
+    - --server-write-timeout={{ .Values.keycloak.timeout }}s
+    - --resources=uri=/health|white-listed=true
+    - --resources=uri=/public/*|white-listed=true
+    - --resources=uri=/*
+    - --secure-cookie=true
+    - --http-only-cookie=true
+    - --enable-refresh-tokens=true
+    - --encryption-key=$(ENCRYPTION_KEY)
+    - --no-redirects=false
+    - --enable-logout-redirect=true
+    - --listen=127.0.0.1:{{ .Values.keycloak.targetPort }}
+    - --revocation-url={{ .Values.keycloak.realm }}/protocol/openid-connect/logout
+  env:
+    - name: ENCRYPTION_KEY
+      value: ""
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: hocs-frontend
+    #       key: encryption_key
+  targetPort: '8081'
+  resources:
+    limits:
+      cpu: 300m
+      memory: 96Mi
+    requests:
+      cpu: 100m
+      memory: 96Mi
+  volumeMounts:
+    - mountPath: /etc/secrets
+      name: frontend-keycloak-secret
+      readOnly: true
+
+keycloakApi:
+  enabled: false
+  targetPort: '8082'
+  args:
+    - --config=/etc/secrets/data.yml
+    - --discovery-url={{ .Values.keycloak.realm }}
+    - --openid-provider-proxy=http://hocs-outbound-proxy.{{ .Release.Namespace }}.svc.cluster.local:31290
+    - --enable-logging=true
+    - --enable-json-logging=true
+    - --upstream-url=http://127.0.0.1:{{ include "hocs-app.port" . }}
+    - --upstream-response-header-timeout={{ .Values.keycloak.timeout }}s
+    - --upstream-expect-continue-timeout={{ .Values.keycloak.timeout }}s
+    - --upstream-keepalive-timeout={{ .Values.keycloak.timeout }}s
+    - --server-read-timeout={{ .Values.keycloak.timeout }}s
+    - --server-write-timeout={{ .Values.keycloak.timeout }}s
+    - --resources=uri=/health|white-listed=true
+    - --resources=uri=/public/*|white-listed=true
+    - --resources=uri=/*
+    - --secure-cookie=true
+    - --http-only-cookie=true
+    - --enable-refresh-tokens=true
+    - --encryption-key=$(ENCRYPTION_KEY)
+    - --no-redirects=true
+    - --listen=127.0.0.1:{{ .Values.keycloakApi.targetPort }}
+
+proxy:
+  enabled: false
+  image:
+    repository: quay.io/ukhomeofficedigital/nginx-proxy
+    version: v4.2.0
+  env:
+    - name: HTTP2
+      value: 'TRUE'
+    - name: PROXY_SERVICE_HOST
+      value: '127.0.0.1'
+    - name: PROXY_SERVICE_PORT
+      value: '{{ .Values.app.port }}'
+    - name: NAXSI_USE_DEFAULT_RULES
+      value: 'FALSE'
+    - name: ENABLE_UUID_PARAM
+      value: 'FALSE'
+    - name: HTTPS_REDIRECT
+      value: 'FALSE'
+    - name: BASIC_AUTH
+      value: '/etc/nginx/authsecrets/htpasswd'
+    - name: SERVER_CERT
+      value: '/certs/tls.pem'
+    - name: SERVER_KEY
+      value: '/certs/tls-key.pem'
+  resources:
+    limits:
+      cpu: 300m
+      memory: 96Mi
+    requests:
+      cpu: 100m
+      memory: 96Mi
+  volumeMounts:
+    - name: certs
+      mountPath: /certs
+      readOnly: true
+    - name: secrets
+      mountPath: /etc/nginx/secrets
+      readOnly: true
+    - name: auth-secrets
+      mountPath: /etc/nginx/authsecrets
+      readOnly: true
+
+truststore:
+  enabled: false
+  image:
+    repository: quay.io/ukhomeofficedigital/cfssl-sidekick-jks
+    version: v0.0.9
+  args:
+    - --certs=/certs
+    - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/acp-root.crt
+    - --domain={{ include "hocs-app.name" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    - --onetime=true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 96Mi
+    requests:
+      cpu: 100m
+      memory: 96Mi
+  volumeMounts:
+    - name: certs
+      mountPath: /certs
+    - name: keystore
+      mountPath: /etc/keystore
+    - name: bundle
+      mountPath: /etc/ssl/certs
+      readOnly: true
+
+ingress:
+  external:
+    enabled: false
+  paths:
+    - backend:
+        serviceName: hocs-mi-dashboards
+        servicePort: 8050
+      path: /

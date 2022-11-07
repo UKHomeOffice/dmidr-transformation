@@ -1,0 +1,31 @@
+
+version: latest
+
+autoscale:
+  enabled: false
+
+deployment:
+  replicas: 1
+  annotations:
+    downscaler/downtime: "Mon-Sun 00:00-08:00 Europe/London,Mon-Sun 18:00-24:00 Europe/London"
+
+keycloak:
+  realm: https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
+  domain: sso-dev.notprod.homeoffice.gov.uk/
+
+app:
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      memory: 512Mi
+  env:
+  - name: isNotProd
+    value: "1"
+
+ingress:
+  external:
+    host: hocs-mi-dashboards.mi-dev.cs-notprod.homeoffice.gov.uk
+  internal:
+    enabled: true
+    host: hocs-mi-dashboards.mi-dev.internal.cs-notprod.homeoffice.gov.uk

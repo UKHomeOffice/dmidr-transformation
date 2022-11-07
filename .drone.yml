@@ -1,0 +1,30 @@
+kind: pipeline
+type: kubernetes
+name: deploy tag
+trigger:
+  event:
+    - tag
+  branch:
+    - main
+
+steps:
+- name: checkout
+  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.0.0
+  commands:
+    - git fetch --tags
+    - git checkout ${DRONE_TAG}
+    - git submodule update --init --recursive
+- name: cs-dev
+  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.0.0
+  environment:
+    CHART_NAME: hocs-mi-transformation
+    KUBE_CLUSTER: acp-notprod
+    KUBE_NAMESPACE: cs-mi-dev
+    KUBE_SERVER: https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+    KUBE_TOKEN:
+      from_secret: CS_NOTPROD_KUBE_TOKEN
+    VERSION: ${DRONE_TAG}
+  commands:
+    - ./hocs-ci-infrastructure/helm/helm-deploy.sh --values ./helm/values-notprod.yaml --set version="$${VERSION}"
+  depends_on:
+    - checkout
