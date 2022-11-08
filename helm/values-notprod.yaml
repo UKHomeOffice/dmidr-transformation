@@ -60,10 +60,3 @@ app:
         name: cs-mi-dev-transformation-rds
         key: resource
         optional: false
-
-ingress:
-  external:
-    host: hocs-mi-transformation.mi-dev.cs-notprod.homeoffice.gov.uk
-  internal:
-    enabled: true
-    host: hocs-mi-transformation.mi-dev.internal.cs-notprod.homeoffice.gov.uk
