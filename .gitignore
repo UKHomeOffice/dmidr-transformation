@@ -1,6 +1,8 @@
 test-data/*
 .env
 
+/.idea
+
 transformations/target
 transformations/dbt-env
 transformations/logs
