@@ -9,10 +9,6 @@ deployment:
   annotations:
     downscaler/downtime: "Mon-Sun 00:00-08:00 Europe/London,Mon-Sun 18:00-24:00 Europe/London"
 
-keycloak:
-  realm: https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
-  domain: sso-dev.notprod.homeoffice.gov.uk/
-
 app:
   resources:
     limits:
@@ -22,6 +18,48 @@ app:
   env:
   - name: isNotProd
     value: "1"
+  - name: transform_db_name
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: db_name
+        optional: false
+  - name: transform_db_endpoint
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: endpoint
+        optional: false
+  - name: transform_db_password
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: password
+        optional: false
+  - name: transform_db_username
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: username
+        optional: false
+  - name: transform_db_port
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: port
+        optional: false
+  - name: transform_db_port
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: port
+        optional: false
+  - name: transform_db_resource
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: resource
+        optional: false
 
 ingress:
   external:
