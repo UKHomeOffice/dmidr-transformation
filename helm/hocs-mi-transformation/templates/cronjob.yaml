@@ -11,7 +11,7 @@ spec:
       name: hocs-mi-transformation
   strategy:
     type: RollingUpdate
-  schedule: "5 9 * * 1-5"
+  schedule: "5 9 * * 1-5" # 9:05 Mon-Fri
   jobTemplate:
     spec:
       template:
