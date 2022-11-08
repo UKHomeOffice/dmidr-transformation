@@ -11,6 +11,7 @@ spec:
       name: hocs-mi-transformation
   strategy:
     type: RollingUpdate
+  schedule: "5 8-18 * * 1-5"
   jobTemplate:
     spec:
       template:
