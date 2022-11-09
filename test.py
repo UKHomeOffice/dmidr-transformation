@@ -5,7 +5,6 @@ import os
 def create_db_connection():
     conn = None
     try:
-        params = config()
         print('Connecting to the Audit database...')
         conn = psycopg2.connect(
             host=os.environ.get("replica_db_host"),
