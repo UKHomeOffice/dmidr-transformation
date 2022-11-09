@@ -1,4 +1,4 @@
-name: 'Docker Build and push plotly image'
+name: 'Docker Build and push job image'
 on:
   pull_request:
     types: [ closed ]

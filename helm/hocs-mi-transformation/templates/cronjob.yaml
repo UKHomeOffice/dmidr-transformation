@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: CronJob
+metadata:
+  name: hocs-mi-transformation
+  labels:
+    version: {{ .Values.version }}
+  annotations: {{- toYaml .Values.deployment.annotations | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      name: hocs-mi-transformation
+  strategy:
+    type: RollingUpdate
+  schedule: "5 9 * * 1-5" # 9:05 Mon-Fri
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: hocs-mi-transformation
+              image: 'quay.io/ukhomeofficedigital/hocs-mi-transformation:{{ .Values.version }}'
+              resources: {{- toYaml .Values.app.resources | nindent 16 }}
+              env: {{- tpl (toYaml .Values.app.env) . | nindent 16 }}
+              livenessProbe:
+                httpGet:
+                  path: /
+                  port: 8050
+                  scheme: HTTP
+                initialDelaySeconds: 5
+                periodSeconds: 60
+                timeoutSeconds: 5
+              readinessProbe:
+                httpGet:
+                  path: /
+                  port: 8050
+                  scheme: HTTP
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+              securityContext:
+                runAsNonRoot: true
+                capabilities:
+                  drop:
+                    - SETUID
+                    - SETGID
+          volumes:
+            - name: certs
+              secret:
+                secretName: hocs-mi-transformation-service-tls-cmio
