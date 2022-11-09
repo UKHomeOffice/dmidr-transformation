@@ -15,7 +15,7 @@ RUN apk update && \
     apk add --no-cache python3 && \
     apk add --no-cache py-pip && \
     apk add --no-cache bash && \
-    apk add --no-cache postgresql-dev
+    apk add --no-cache libpq-dev
 RUN ln -sf python3 /usr/bin/python
 
 RUN python -m venv .venv
