@@ -6,9 +6,6 @@ metadata:
     version: {{ .Values.version }}
   annotations: {{- toYaml .Values.deployment.annotations | nindent 4 }}
 spec:
-  selector:
-    matchLabels:
-      name: hocs-mi-transformation
   schedule: "0-59/5 * * * 1-5" # 9:05 Mon-Fri
   jobTemplate:
     spec:
