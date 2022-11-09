@@ -11,8 +11,7 @@ def create_db_connection():
             user=os.environ.get("replica_db_username"),
             password=os.environ.get("replica_db_password"),
             database=os.environ.get("replica_db_name"),
-            port=int(os.environ.get("replica_db_port")),
-            cursorclass=cursors.DictCursor,
+            port=int(os.environ.get("replica_db_port"))
         )
         cur = conn.cursor()
 
@@ -30,17 +29,15 @@ def create_db_connection():
             conn.close()
             print('Database connection closed.')
 
-    return conn
-
 
 def get_comp_performance():
-    connection = create_db_connection()
+    create_db_connection()
 
-    with connection.cursor() as cursor:
-        result = select_top_ten(cursor)
+    #with connection.cursor() as cursor:
+    #    result = select_top_ten(cursor)
 
-    for row in result:
-        print(row[0])
+    #for row in result:
+    #    print(row[0])
 
 
 def select_top_ten(cursor):
