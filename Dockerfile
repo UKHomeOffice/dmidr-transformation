@@ -6,6 +6,7 @@ RUN mkdir root/.dbt
 COPY transformations transformations/
 COPY transformations/profiles /root/.dbt/
 COPY test.py .
+COPY ./requirements.txt ./requirements.txt
 
 ENV PYTHONPATH ./
 
@@ -17,8 +18,9 @@ RUN apk update && \
 RUN ln -sf python3 /usr/bin/python
 
 RUN python -m venv .venv
+RUN /.venv/bin/python -m pip install --upgrade pip
+RUN /.venv/bin/pip install -r requirements.txt
 
-RUN pip install dbt-postgres
 RUN dbt --version
 
 RUN adduser -D -u 1001 dbt

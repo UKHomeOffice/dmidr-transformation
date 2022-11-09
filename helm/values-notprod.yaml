@@ -60,3 +60,39 @@ app:
         name: cs-mi-dev-transformation-rds
         key: resource
         optional: false
+  - name: replica_db_host
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: host
+        optional: false
+  - name: replica_db_name
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: name
+        optional: false
+  - name: replica_db_username
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: user_name
+        optional: false
+  - name: replica_db_password
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: password
+        optional: false
+  - name: replica_db_schema
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: schema_name
+        optional: false
+  - name: replica_db_port
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-rds
+        key: port
+        optional: false
