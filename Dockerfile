@@ -6,6 +6,7 @@ RUN mkdir root/.dbt
 COPY transformations transformations/
 COPY transformations/profiles /root/.dbt/
 COPY test.py .
+COPY ./requirements.txt ./requirements.txt
 
 ENV PYTHONPATH ./
 
