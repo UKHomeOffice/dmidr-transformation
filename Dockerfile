@@ -21,7 +21,7 @@ RUN python -m venv .venv
 RUN /.venv/bin/python -m pip install --upgrade pip
 RUN /.venv/bin/pip install -r requirements.txt
 
-RUN dbt --version
+RUN /.venv/bin/dbt --version
 
 RUN adduser -D -u 1001 dbt
 
