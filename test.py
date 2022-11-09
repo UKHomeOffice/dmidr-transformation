@@ -7,15 +7,15 @@ def create_db_connection():
     try:
         print('Connecting to the Audit database...')
         conn = psycopg2.connect(
-            host=os.environ.get("replica_db_host"),
-            user=os.environ.get("replica_db_username"),
-            password=os.environ.get("replica_db_password"),
-            database=os.environ.get("replica_db_name"),
-            port=int(os.environ.get("replica_db_port"))
+            host=os.environ.get("transform_db_endpoint"),
+            user=os.environ.get("transform_db_username"),
+            password=os.environ.get("transform_db_password"),
+            database=os.environ.get("transform_db_name"),
+            port=int(os.environ.get("transform_db_port"))
         )
         cur = conn.cursor()
 
-        print('Audit database version:')
+        print('Transform database version:')
         cur.execute('SELECT version()')
 
         db_version = cur.fetchone()
