@@ -20,16 +20,10 @@ def get_comp_performance():
     try:
         with create_db_connection(REPLICA_DATABASE) as connection:
             with connection.cursor() as cursor:
-                print('Audit database version:')
-                cursor.execute('SELECT version()')
+                select_top_ten(cursor)
 
-                db_version = cursor.fetchone()
-                print(db_version)
-
-                #select_top_ten(cursor)
-
-                #for row in cursor.fetchall():
-                    #print(row[0])
+                for row in cursor.fetchall():
+                    print(row)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
