@@ -5,8 +5,8 @@ RUN mkdir root/.dbt
 
 COPY transformations transformations/
 COPY transformations/profiles /root/.dbt/
-COPY test.py .
-COPY ./requirements.txt ./requirements.txt
+COPY extract_data.py .
+COPY requirements.txt .
 
 ENV PYTHONPATH ./
 
@@ -29,4 +29,4 @@ RUN adduser -D -u 1001 dbt
 USER 1001
 
 ENTRYPOINT [ "/.venv/bin/python" ]
-CMD [ "./test.py" ]
+CMD [ "./extract_data.py" ]
