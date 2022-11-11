@@ -8,8 +8,6 @@ services:
       - POSTGRES_PASSWORD=postgress
     ports:
       - '5432:5432'
-    volumes:
-      - dbtransform:/var/lib/postgressql/data
   replica-db:
     container_name: replica
     image: postgres:14.1-alpine
@@ -20,6 +18,7 @@ services:
       - '5433:5432' # not sure if porting is done correctly.
     volumes:
       - dbreplica:/var/lib/postgressql/data
+      - ./dbreplica/init.sql:/var/lib/postgressql/data
   etl-process:
     build: .
     environment:
