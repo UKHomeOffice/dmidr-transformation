@@ -1,44 +1,48 @@
 version: "3.9"
 services:
-  run-transformations:
-    container_name: ho_reporting_run_transformations
-    build: ./transformations
+  transform-db:
+    container_name: transformation
+    image: postgres:14.1-alpine
     environment:
-      - DBT_ENVIRONMENT=not-prod
-      - DBT_DB_NAME=decs_plotly_target
-      - DBT_ENV_SECRET_PASSWORD=${target_password}
-      - DBT_USER=${target_username}
-      - DBT_HOST=${target_hostname}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+    ports:
+      - '5432:5432'
+    volumes:
+      - dbtransform:/var/lib/postgressql/data
+  replica-db:
+    container_name: replica
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+    ports:
+      - '5433:5432' # not sure if porting is done correctly.
+    volumes:
+      - dbreplica:/var/lib/postgressql/data
+  etl-process:
+    build: .
+    environment:
+      - transform_db_name=postgres
+      - transform_db_endpoint=postgres
+      - transform_db_password=postgres
+      - transform_db_username=postgres
+      - transform_db_port=5432
+      - transform_db_resource=postgres
+      - replica_db_host=postgres
+      - replica_db_name=postgres
+      - replica_db_username=postgres
+      - replica_db_password=postgres
+      - replica_db_schema=postgres
+      - replica_db_port=5433
     depends_on:
-      test-source-data:
-        condition: service_completed_successfully
-    command: run
-    volumes:
-      - ./transformations:/usr/app/dbt
-      - ./transformations/profiles:/root/.dbt/
-  test-source-data:
-    container_name: test_source_data
-    build: ./transformations
-    environment:
-      - DBT_ENVIRONMENT=not-prod
-      - DBT_DB_NAME=decs_plotly_target
-      - DBT_ENV_SECRET_PASSWORD=${target_password}
-      - DBT_USER=${target_username}
-      - DBT_HOST=${target_hostname}
-    command: "test --select source:*"
-    volumes:
-      - ./transformations:/usr/app/dbt
-      - ./transformations/profiles:/root/.dbt/
-  test-transformations:
-    container_name: test_transformations
-    build: ./transformations
-    environment:
-      - DBT_ENVIRONMENT=testing-not-prod
-      - DBT_DB_NAME=decs_plotly_target
-      - DBT_ENV_SECRET_PASSWORD=${target_password}
-      - DBT_USER=${target_username}
-      - DBT_HOST=${target_hostname}
-    volumes:
-      - ./transformations:/usr/app/dbt
-      - ./transformations/profiles:/root/.dbt/
-    entrypoint: bash -c "dbt run --full-refresh && dbt test"
+      transform-db:
+        condition: service_started
+      replica-db:
+        condition: service_started
+
+volumes:
+  dbtransform:
+    driver: local
+  dbreplica:
+    driver: local
