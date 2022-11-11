@@ -18,7 +18,7 @@ services:
       - '5433:5432' # not sure if porting is done correctly.
     volumes:
       - dbreplica:/var/lib/postgressql/data
-      - ./dbreplica/init.sql:/var/lib/postgressql/data
+      - ./dbreplica/init.sql:/docker-entrypoint-initdb.d/init_db.sql
   etl-process:
     build: .
     environment:

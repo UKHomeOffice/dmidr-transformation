@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS audit_event
 (
     id                     BIGSERIAL,
@@ -16,5 +18,8 @@ CREATE TABLE IF NOT EXISTS audit_event
 
     PRIMARY KEY (uuid, audit_timestamp, type),
     CONSTRAINT audit_event_uuid_idempotent UNIQUE (uuid, audit_timestamp, type)
-    ) PARTITION BY RANGE (audit_timestamp);
+    );
+
+INSERT INTO audit_event(id, uuid, case_uuid, stage_uuid, correlation_id, raising_service, audit_payload, type, user_id, case_type, deleted)
+VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', '', null, NOW(), '', '', '', FALSE)
 
