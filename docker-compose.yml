@@ -22,23 +22,26 @@ services:
   etl-process:
     build: .
     environment:
-      - transform_db_name=postgres
-      - transform_db_endpoint=postgres
+      - transform_db_name=transform-db
+      - transform_db_endpoint=transform-db
       - transform_db_password=postgres
       - transform_db_username=postgres
       - transform_db_port=5432
       - transform_db_resource=postgres
-      - replica_db_host=postgres
-      - replica_db_name=postgres
+      - replica_db_host=replica-db
+      - replica_db_name=replica-db
       - replica_db_username=postgres
       - replica_db_password=postgres
       - replica_db_schema=postgres
-      - replica_db_port=5433
+      - replica_db_port=5432
     depends_on:
       transform-db:
         condition: service_started
       replica-db:
         condition: service_started
+    links:
+      - transform-db
+      - replica-db
 
 volumes:
   dbtransform:
