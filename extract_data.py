@@ -3,6 +3,7 @@ import os
 
 TRANSFORM_DATABASE = "transformation"
 REPLICA_DATABASE = "replica"
+REPLICA_SCHEMA = os.environ.get("replica_db_schema")
 
 
 def create_db_connection(database):
@@ -42,8 +43,8 @@ def create_extract_table():
 def extract_data():
     try:
         with create_db_connection(REPLICA_DATABASE) as replica_connection, create_db_connection(TRANSFORM_DATABASE) as transform_connection:
-            with replica_connection.cursor().copy(f"COPY {replica_schema}.audit_event TO STDOUT (FORMAT BINARY)") as copy_replica:
-                with transform_connection.cursor().copy(f"COPY {transform_schema}.audit_event FROM STDIN (FORMAT BINARY)") as copy_transform:
+            with replica_connection.cursor().copy(f"COPY {REPLICA_SCHEMA}.audit_event TO STDOUT (FORMAT BINARY)") as copy_replica:
+                with transform_connection.cursor().copy(f"COPY audit_event FROM STDIN (FORMAT BINARY)") as copy_transform:
                     for data in copy_replica:
                         copy_transform.write(data)
     except (Exception, psycopg2.DatabaseError) as error:
@@ -64,8 +65,6 @@ def get_comp_performance():
 
 
 def select_top_ten(cursor):
-    schema = os.environ.get("replica_db_schema")
-
     top_ten_sql = f"""
         select *
         from {schema}.audit_event
