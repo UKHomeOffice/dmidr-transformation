@@ -67,7 +67,7 @@ def get_comp_performance():
 def select_top_ten(cursor):
     top_ten_sql = f"""
         select *
-        from {schema}.audit_event
+        from {REPLICA_SCHEMA}.audit_event
         fetch first 10 rows only;
     """
     cursor.execute(top_ten_sql)
