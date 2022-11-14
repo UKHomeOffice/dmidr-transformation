@@ -1,6 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS audit_event
+CREATE SCHEMA IF NOT EXISTS postgres;
+
+CREATE TABLE IF NOT EXISTS postgres.audit_event
 (
     id                     BIGSERIAL,
     uuid                   UUID        NOT NULL,
@@ -20,6 +22,6 @@ CREATE TABLE IF NOT EXISTS audit_event
     CONSTRAINT audit_event_uuid_idempotent UNIQUE (uuid, audit_timestamp, type)
     );
 
-INSERT INTO audit_event(id, uuid, case_uuid, stage_uuid, correlation_id, raising_service, audit_payload, type, user_id, case_type, deleted)
-VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', '', null, NOW(), '', '', '', FALSE)
+INSERT INTO audit_event(id, uuid, case_uuid, stage_uuid, correlation_id, raising_service, audit_payload, namespace, audit_timestamp, type, user_id, case_type, deleted)
+VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', '', null, '', NOW(), '', '', '', FALSE)
 
