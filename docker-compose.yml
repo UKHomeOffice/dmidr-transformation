@@ -4,6 +4,7 @@ services:
     container_name: transformation
     image: postgres:14.1-alpine
     environment:
+      - POSTGRES_DB=transformation
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgress
     ports:
@@ -12,6 +13,7 @@ services:
     container_name: replica
     image: postgres:14.1-alpine
     environment:
+      - POSTGRES_DB=replica
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgress
     ports:
@@ -22,14 +24,15 @@ services:
   etl-process:
     build: .
     environment:
-      - transform_db_name=transform-db
-      - transform_db_endpoint=transform-db
-      - transform_db_password=postgres
-      - transform_db_username=postgres
-      - transform_db_port=5432
-      - transform_db_resource=postgres
+      - transformation_db_name=transform-db
+      - transformation_db_name=transformation
+      - transformation_db_endpoint=transform-db
+      - transformation_db_password=postgres
+      - transformation_db_username=postgres
+      - transformation_db_port=5432
+      - transformation_db_resource=postgres
       - replica_db_host=replica-db
-      - replica_db_name=replica-db
+      - replica_db_name=replica
       - replica_db_username=postgres
       - replica_db_password=postgres
       - replica_db_schema=postgres

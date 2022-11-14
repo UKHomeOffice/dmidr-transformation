@@ -20,6 +20,6 @@ CREATE TABLE IF NOT EXISTS audit_event
     CONSTRAINT audit_event_uuid_idempotent UNIQUE (uuid, audit_timestamp, type)
     );
 
-INSERT INTO audit_event(id, uuid, case_uuid, stage_uuid, correlation_id, raising_service, audit_payload, type, user_id, case_type, deleted)
-VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', '', null, NOW(), '', '', '', FALSE)
+INSERT INTO audit_event(id, uuid, case_uuid, stage_uuid, correlation_id, raising_service, audit_payload, namespace, audit_timestamp, type, user_id, case_type, deleted)
+VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', '', null, '', NOW(), '', '', '', FALSE)
 
