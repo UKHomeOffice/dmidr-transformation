@@ -1,6 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS audit_event
+CREATE SCHEMA IF NOT EXISTS postgres;
+
+CREATE TABLE IF NOT EXISTS postgres.audit_event
 (
     id                     BIGSERIAL,
     uuid                   UUID        NOT NULL,

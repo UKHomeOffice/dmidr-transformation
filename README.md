@@ -12,50 +12,25 @@ If they pass, it will build the docker image.
 It will then push the image to the [quay repository][quay_repository], tagged with the new version number and create a matching tag in the github repository.
 1. The creation of a tag in the github repository will trigger the [drone pipeline][drone_pipeline] to run and deploy the image to the kubernetes cluster.
 
-# Local development
+# Getting started
 1.Set up virtual env
 
 ```
-$ python -m venv .venv
+$ make build
+$ make db-setup
 ```
 
-2. Start env
+2. Run basic extraction pipeline
 
 ```
-$ source .venv/bin/activate
+$ make serve
 ```
 
-3. Install requirements
+3. Examine results in Transformation Database
 
 ```
-$ pip install -r requirements.txt
-```
-
-# Create dotenv file
-```sh
-cp ./.env.example ./.env
-```
-Then add credentials for the RDS instances.
-
-# Run transformations
-
-## Using docker
-```sh
-docker compose up run-transformations
-```
-
-## Using DBT CLI
-### 1. Install dbt via homebrew
-```sh
-brew install dbt-postgres
-```
-### 2. Run transformations
-```sh
-cd transformations
-dbt run --profiles-dir ./profiles
-```
-
-# Run unit tests
-```sh
-docker compose up test-transformations
+$ make shell-transform
+$ psql -Upostgres
+$ \c transformation
+$ select * from audit_event;
 ```

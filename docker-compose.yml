@@ -6,25 +6,35 @@ services:
     environment:
       - POSTGRES_DB=transformation
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - '5432'
     ports:
       - '5432:5432'
+    networks:
+      - hocsnet
   replica-db:
     container_name: replica
     image: postgres:14.1-alpine
     environment:
       - POSTGRES_DB=replica
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - '5433'
     ports:
       - '5433:5432' # not sure if porting is done correctly.
+    command: -p 5433
     volumes:
       - dbreplica:/var/lib/postgressql/data
       - ./dbreplica/init.sql:/docker-entrypoint-initdb.d/init_db.sql
+    networks:
+      - hocsnet
   etl-process:
+    container_name: etl-process
     build: .
     environment:
-      - transformation_db_name=transform-db
+      - transformation_db_host=transform-db
       - transformation_db_name=transformation
       - transformation_db_endpoint=transform-db
       - transformation_db_password=postgres
@@ -36,7 +46,7 @@ services:
       - replica_db_username=postgres
       - replica_db_password=postgres
       - replica_db_schema=postgres
-      - replica_db_port=5432
+      - replica_db_port=5433
     depends_on:
       transform-db:
         condition: service_started
@@ -45,9 +55,15 @@ services:
     links:
       - transform-db
       - replica-db
+    networks:
+      - hocsnet
 
 volumes:
   dbtransform:
     driver: local
   dbreplica:
     driver: local
+
+networks:
+  hocsnet:
+    name: hocsnet

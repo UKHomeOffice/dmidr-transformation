@@ -1,5 +1,6 @@
 import psycopg2
 import os
+from io import StringIO
 
 TRANSFORM_DATABASE = "transformation"
 REPLICA_DATABASE = "replica"
@@ -36,17 +37,21 @@ def create_extract_table():
                                deleted                BOOLEAN    NOT NULL DEFAULT FALSE,
                                PRIMARY KEY(uuid, audit_timestamp, type),
                                CONSTRAINT audit_event_uuid_idempotent UNIQUE(uuid, audit_timestamp, type)
-                           ) PARTITION BY RANGE(audit_timestamp)
+                           ) 
                 """)
 
 
 def extract_data():
     try:
+        input = StringIO()
         with create_db_connection(REPLICA_DATABASE) as replica_connection, create_db_connection(TRANSFORM_DATABASE) as transform_connection:
-            with replica_connection.cursor().copy(f"COPY {REPLICA_SCHEMA}.audit_event TO STDOUT (FORMAT BINARY)") as copy_replica:
-                with transform_connection.cursor().copy(f"COPY audit_event FROM STDIN (FORMAT BINARY)") as copy_transform:
-                    for data in copy_replica:
-                        copy_transform.write(data)
+            with replica_connection.cursor() as replica_cursor:
+                replica_cursor.copy_expert(
+                    f'COPY (select * from {REPLICA_SCHEMA}.audit_event) TO STDOUT', input)
+                with transform_connection.cursor() as transform_cursor:
+                    input.seek(0)
+                    transform_cursor.copy_expert(
+                        'COPY audit_event from STDOUT', input)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
