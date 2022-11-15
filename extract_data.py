@@ -47,7 +47,7 @@ def extract_data():
         with create_db_connection(REPLICA_DATABASE) as replica_connection, create_db_connection(TRANSFORM_DATABASE) as transform_connection:
             with replica_connection.cursor() as replica_cursor:
                 replica_cursor.copy_expert(
-                    f'COPY (select * from {REPLICA_SCHEMA}.audit_event) TO STDOUT', input)
+                    f'COPY (select * from {REPLICA_SCHEMA}.audit_event fetch first 10 rows only) TO STDOUT', input)
                 with transform_connection.cursor() as transform_cursor:
                     input.seek(0)
                     transform_cursor.copy_expert(
