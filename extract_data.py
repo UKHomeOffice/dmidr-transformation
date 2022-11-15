@@ -80,3 +80,5 @@ def select_top_ten(cursor):
 
 create_extract_table()
 extract_data()
+
+get_comp_performance()
