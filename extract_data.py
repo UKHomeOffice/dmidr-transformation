@@ -2,7 +2,7 @@ import psycopg2
 import os
 from io import StringIO
 
-TRANSFORM_DATABASE = "transform"
+TRANSFORM_DATABASE = "transformation"
 REPLICA_DATABASE = "replica"
 REPLICA_SCHEMA = os.environ.get("replica_db_schema")
 
