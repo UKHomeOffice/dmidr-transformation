@@ -18,6 +18,12 @@ app:
   env:
   - name: isNotProd
     value: "1"
+  - name: transformation_db_host
+    valueFrom:
+      secretKeyRef:
+        name: cs-mi-dev-transformation-rds
+        key: host
+        optional: false
   - name: transformation_db_name
     valueFrom:
       secretKeyRef:
