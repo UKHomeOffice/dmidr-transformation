@@ -22,4 +22,4 @@ spec:
                 capabilities:
                   drop:
                     - SETUID
-                    - SETGID
+                    - SETGID.
