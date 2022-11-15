@@ -5,10 +5,10 @@ sources:
     schema: public
     description: Raw decs data
     tables:
-      - name: case_data
+      - name: audit_data
         columns:
-          - name: timestamp
-            tests:
-              - unique
-      - name: case_notes
-      - name: allocations
+          - name: id
+            description: Primary key
+          - name: case_uuid
+            description: Primary unique key of the
+          - name: allocations
