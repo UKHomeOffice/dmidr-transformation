@@ -18,37 +18,37 @@ app:
   env:
   - name: isNotProd
     value: "1"
-  - name: transformation_db_name
+  - name: transform_db_name
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
         key: db_name
         optional: false
-  - name: transformation_db_endpoint
+  - name: transform_db_endpoint
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
         key: endpoint
         optional: false
-  - name: transformation_db_password
+  - name: transform_db_password
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
         key: password
         optional: false
-  - name: transformation_db_username
+  - name: transform_db_username
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
         key: username
         optional: false
-  - name: transformation_db_port
+  - name: transform_db_port
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
         key: port
         optional: false
-  - name: transformation_db_resource
+  - name: transform_db_resource
     valueFrom:
       secretKeyRef:
         name: cs-mi-dev-transformation-rds
