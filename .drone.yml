@@ -9,13 +9,13 @@ trigger:
 
 steps:
 - name: checkout
-  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.0.0
+  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.1.0
   commands:
     - git fetch --tags
     - git checkout ${DRONE_TAG}
     - git submodule update --init --recursive
 - name: cs-dev
-  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.0.0
+  image: quay.io/ukhomeofficedigital/hocs-helm-kubectl:1.1.0
   environment:
     CHART_NAME: hocs-mi-transformation
     KUBE_CLUSTER: acp-notprod
