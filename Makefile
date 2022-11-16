@@ -20,3 +20,6 @@ logs:
 
 shell-transform:
 	docker exec -it transformation sh
+
+shell:
+	docker exec -it etl-process sh

@@ -3,6 +3,7 @@ import os
 from io import StringIO
 
 TRANSFORM_DATABASE = "transformation"
+TRANSFORMATION_SCHEMA = "transformation"
 REPLICA_DATABASE = "replica"
 REPLICA_SCHEMA = os.environ.get("replica_db_schema")
 
@@ -20,7 +21,9 @@ def create_db_connection(database):
 def create_extract_table():
     with create_db_connection(TRANSFORM_DATABASE) as transform_connection:
         with transform_connection.cursor() as cursor:
-            cursor.execute(f"""CREATE TABLE IF NOT EXISTS audit_event
+            cursor.execute(f"""
+                           CREATE SCHEMA IF NOT EXISTS {TRANSFORMATION_SCHEMA};
+                           CREATE TABLE IF NOT EXISTS {TRANSFORMATION_SCHEMA}.audit_event
                            (
                                id                     BIGSERIAL,
                                uuid                   UUID        NOT NULL,
@@ -51,34 +54,10 @@ def extract_data():
                 with transform_connection.cursor() as transform_cursor:
                     input.seek(0)
                     transform_cursor.copy_expert(
-                        'COPY audit_event from STDOUT', input)
+                        f'COPY {TRANSFORMATION_SCHEMA}.audit_event from STDOUT', input)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-
-
-def get_comp_performance():
-    try:
-        with create_db_connection(REPLICA_DATABASE) as connection:
-            with connection.cursor() as cursor:
-                select_top_ten(cursor)
-
-                for row in cursor.fetchall():
-                    print(row)
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-
-def select_top_ten(cursor):
-    top_ten_sql = f"""
-        select *
-        from {REPLICA_SCHEMA}.audit_event
-        fetch first 10 rows only;
-    """
-    cursor.execute(top_ten_sql)
 
 
 create_extract_table()
 extract_data()
-
-get_comp_performance()

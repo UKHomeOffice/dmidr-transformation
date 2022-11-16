@@ -4,9 +4,9 @@ RUN mkdir transformations
 RUN mkdir root/.dbt
 
 COPY transformations transformations/
-COPY transformations/profiles /root/.dbt/
 COPY extract_data.py .
 COPY requirements.txt .
+COPY run_etl.sh .
 
 ENV PYTHONPATH ./
 
@@ -24,9 +24,4 @@ RUN /.venv/bin/pip install -r requirements.txt
 
 RUN /.venv/bin/dbt --version
 
-RUN adduser -D -u 1001 dbt
-
-USER 1001
-
-ENTRYPOINT [ "/.venv/bin/python" ]
-CMD [ "./extract_data.py" ]
+CMD [ "./run_etl.sh" ]
