@@ -42,12 +42,12 @@ VALUES(
     uuid_generate_v1(), 
     uuid_generate_v1(), 
     '1', 
-    '', 
-    null, 
-    '', 
+    'hocs-casework-794d5dbd56-5tw6s', 
+    '{ "audit_payload": { "type": "MIN", "uuid": "e4bc767d-700c-40da-9565-017f4a24b0a1", "created": "2019-09-11T12:37:28.752136", "reference": "MIN/0120009/21", "caseDeadline": "2019-10-09", "dateReceived": "2019-09-11" }}',
+    'cs-dev', 
     NOW(), 
     'CASE_CREATED', 
-    '', 
-    '', 
+    '593c6e02-ece0-499a-b967-404a20dac380', 
+    'a1', 
     FALSE
-)
+);
