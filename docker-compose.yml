@@ -45,7 +45,7 @@ services:
       - replica_db_name=replica
       - replica_db_username=postgres
       - replica_db_password=postgres
-      - replica_db_schema=postgres
+      - replica_db_schema=replica
       - replica_db_port=5433
     depends_on:
       transform-db:

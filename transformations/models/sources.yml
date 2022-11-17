@@ -1,11 +1,10 @@
 version: 2
 
 sources:
-  - name: decs_raw
-    schema: public
+  - name: transformation
     description: Raw decs data
     tables:
-      - name: audit_data
+      - name: audit_event
         columns:
           - name: id
             description: Primary key

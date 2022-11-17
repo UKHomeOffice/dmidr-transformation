@@ -32,5 +32,5 @@ $ make serve
 $ make shell-transform
 $ psql -Upostgres
 $ \c transformation
-$ select * from audit_event;
+$ select * from transformation.audit_event;
 ```

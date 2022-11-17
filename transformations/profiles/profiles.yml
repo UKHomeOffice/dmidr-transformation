@@ -1,30 +1,12 @@
-rds_pg_case_studies:
-  target: "{{ env_var('DBT_ENVIRONMENT', 'not-prod') }}"
+transformation_db:
+  target: 'not-prod'
   outputs:
     not-prod:
       type: postgres
-      host: "{{ env_var('DBT_HOST') }}"
-      port: 5432
-      dbname: "{{ env_var('DBT_DB_NAME') }}"
+      host: "{{ env_var('transformation_db_host') }}"
+      port: 5432 # need to get it as an environment variable
+      dbname: "{{ env_var('transformation_db_name') }}"
       schema: public
       threads: 1
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
-    testing-not-prod:
-      type: postgres
-      host: "{{ env_var('DBT_HOST') }}"
-      port: 5432
-      dbname: "{{ env_var('DBT_DB_NAME') }}"
-      schema: testing_not_prod
-      threads: 1
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
-    prod:
-      type: postgres
-      host: "{{ env_var('DBT_HOST') }}"
-      port: 5432
-      dbname: "{{ env_var('DBT_DB_NAME') }}"
-      schema: public
-      threads: 1
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
+      user: "{{ env_var('transformation_db_username') }}"
+      password: "{{ env_var('transformation_db_password') }}"
