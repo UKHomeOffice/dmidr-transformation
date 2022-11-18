@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: case_table
+    columns:
+      - name: case_type, case_deadline, case_uuid
