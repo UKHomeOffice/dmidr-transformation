@@ -1,9 +1,5 @@
--- CREATE TABLE IF NOT EXISTS payload_cols 
--- AS SELECT audit_payload::json->'audit_payload'->>'type' as type_col, 
--- audit_payload::json->'audit_payload'->>'uuid' as uuid_col from transformation.audit_event;
-
-
-CREATE TABLE IF NOT EXISTS payload_cols (type_col VARCHAR(500), uuid_col VARCHAR(500));
-INSERT INTO payload_cols 
-SELECT audit_payload::json->'audit_payload'->>'type' as type_col, 
-audit_payload::json->'audit_payload'->>'uuid' as uuid_col from transformation.audit_event;
+CREATE TABLE IF NOT EXISTS case_table (case_type VARCHAR(500), case_deadline DATE, case_uuid VARCHAR(500));
+INSERT INTO case_table (case_type, case_deadline, case_uuid)
+SELECT audit_payload::json->'audit_payload'->>'type', 
+TO_DATE(audit_payload::json->'audit_payload'->>'caseDeadline', 'YYYY-MM-DD'),
+audit_payload::json->'audit_payload'->>'uuid' from transformation.audit_event;
