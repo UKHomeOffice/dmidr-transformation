@@ -4,10 +4,10 @@ CREATE TABLE IF NOT EXISTS case_table (case_type VARCHAR(500), case_deadline DAT
 -- get data from json blob in case table
 
 INSERT INTO case_table (case_type, case_responded, case_deadline, case_uuid)
-SELECT audit_payload::json->'audit_payload'->>'type',
-SELECT audit_payload::json->'audit_payload'->>'DateResponded'; 
-TO_DATE(audit_payload::json->'audit_payload'->>'caseDeadline', 'YYYY-MM-DD'),
-audit_payload::json->'audit_payload'->>'uuid' from transformation.audit_event;
+SELECT audit_payload::json->'audit_payload'->>'COMP'->>'type',
+SELECT audit_payload::json->'audit_payload'->>'COMP'->>'DateResponded'; 
+TO_DATE(audit_payload::json->'audit_payload'->>'COMP'->>'caseDeadline', 'YYYY-MM-DD'),
+case_uuid from transformation.audit_event;
 
 -- Total Cases Due
 -- Count CASE_DATA where deadline within Last Working Week for distinct caseUuid
