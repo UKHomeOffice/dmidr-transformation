@@ -45,14 +45,18 @@ VALUES(
     'hocs-casework-794d5dbd56-5tw6s', 
     '{ 
         "audit_payload": 
-        { 
-            "type": "MIN", 
-            "uuid": "e4bc767d-700c-40da-9565-017f4a24b0a1", 
-            "created": "2019-09-11T12:37:28.752136", 
-            "reference": "MIN/0120009/21", 
-            "caseDeadline": "2019-10-09", 
-            "dateReceived": "2019-09-11", 
-            "DateResponded": "2019-10-11"
+        {
+            "COMP": {
+                "CompType": "MIN",
+                "DateReceived": "2019-09-11",
+                "Directorate": "UKVI",
+                "DateResponded": "2019-10-11",
+                "ComplainantHORef": "MIN/0120009/21",
+                "BusArea": "UKVI",
+                "CatStage3": "Triage-unallocated",
+                "CatCCHandle": "Karen"
+            }
+
         }
     }',
     'cs-dev', 
