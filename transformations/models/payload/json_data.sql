@@ -4,9 +4,8 @@ CREATE TABLE IF NOT EXISTS case_table (case_type VARCHAR(500), case_responded VA
 -- get data from json blob in case table
 
 INSERT INTO case_table (case_type, case_responded, case_deadline, case_uuid)
-SELECT audit_payload::json->'audit_payload'->>'type',
-TO_DATE(audit_payload::json->'audit_payload'->>'FOI'->>'dateOfResponse', 'YYYY-MM-DD'),
-TO_DATE(audit_payload::json->'audit_payload'->>'caseDeadline', 'YYYY-MM-DD'),
+SELECT audit_payload::json->>'type',
+TO_DATE(audit_payload::json->>'caseDeadline', 'YYYY-MM-DD'),
 case_uuid from transformation.audit_event;
 
 -- Total Cases Due
@@ -22,11 +21,10 @@ case_uuid from transformation.audit_event;
 -- SELECT DISTINCT case_uuid, Count(case_uuid) FROM case_table WHERE case_responded > case_deadline GROUP BY case_uuid;
 
 -- Create table for due cases
-CREATE TABLE IF NOT EXISTS due_cases_table (Workflow VARCHAR(500), Directorate VARCHAR(500), case_created_by VARCHAR(500), date_on_CTS DATE, current_handler_name VARCHAR(500), due_date DATE);
-INSERT INTO due_cases_table (Directorate, case_created_by, date_on_CTS, current_handler_name, due_date)
-SELECT audit_payload::json->'audit_payload'->'COMP'->>'Directorate',
-audit_payload::json->'audit_payload'->>'created',
-TO_DATE(audit_payload::json->'audit_payload'->>'dateReceived', 'YYYY-MM-DD'),
-audit_payload::json->'audit_payload'->>'fullname',
-TO_DATE(audit_payload::json->'audit_payload'->>'caseDeadline', 'YYYY-MM-DD') from transformation.audit_event;
+CREATE TABLE IF NOT EXISTS due_cases_table (Workflow VARCHAR(500), case_created_by VARCHAR(500), date_on_CTS DATE, current_handler_name VARCHAR(500), due_date DATE);
+INSERT INTO due_cases_table (case_created_by, date_on_CTS, current_handler_name, due_date)
+SELECT TO_DATE(left(audit_payload::json->>'created', 9), 'YYYY-MM-DD'),
+TO_DATE(audit_payload::json->>'dateReceived', 'YYYY-MM-DD'),
+audit_payload::json->>'fullname',
+TO_DATE(audit_payload::json->>'caseDeadline', 'YYYY-MM-DD') from transformation.audit_event;
 
