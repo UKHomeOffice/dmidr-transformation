@@ -46,17 +46,30 @@ VALUES(
     '{ 
         "audit_payload": 
         {
+            "data": 
+            {
+                "valid": "true", 
+                "DateReceived": "2019-09-11", 
+                "CopyNumberTen": "TRUE", 
+                "Correspondents": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5", 
+                "OriginalChannel": "EMAIL", 
+                "DateOfCorrespondence": "2019-09-10",
+            }, 
+            "type": "MIN", 
+            "uuid": "e4bc767d-700c-40da-9565-017f4a24b0a1", 
+            "created": "2019-09-11T12:37:28.752136", 
+            "reference": "MIN/0120001/19", 
+            "caseDeadline": "2019-10-09", 
+            "dateReceived": "2019-09-11", 
+            "primaryTopic": "None", 
+            "primaryCorrespondent": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5",
+            "fullname": "Adam Afriyie MP"
             "COMP": {
-                "CompType": "MIN",
-                "DateReceived": "2019-09-11",
-                "Directorate": "UKVI",
-                "DateResponded": "2019-10-11",
-                "ComplainantHORef": "MIN/0120009/21",
-                "BusArea": "UKVI",
-                "CatStage3": "Triage-unallocated",
-                "CatCCHandle": "Karen"
+                "Directorate": "UKVI"
+            },
+            "FOI": {
+                "dateOfResponse": "2019-10-09"
             }
-
         }
     }',
     'cs-dev', 
