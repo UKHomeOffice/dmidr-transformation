@@ -43,7 +43,27 @@ VALUES(
     uuid_generate_v1(), 
     '1', 
     'hocs-casework-794d5dbd56-5tw6s', 
-    '{ "audit_payload": { "type": "MIN", "uuid": "e4bc767d-700c-40da-9565-017f4a24b0a1", "created": "2019-09-11T12:37:28.752136", "reference": "MIN/0120009/21", "caseDeadline": "2019-10-09", "dateReceived": "2019-09-11" }}',
+    '{ 
+        "data": 
+        {
+            "valid": "true", 
+            "DateReceived": "2019-09-11", 
+            "CopyNumberTen": "TRUE", 
+            "Correspondents": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5", 
+            "OriginalChannel": "EMAIL", 
+            "DateOfCorrespondence": "2019-09-10"
+        },
+        "type": "MIN", 
+        "uuid": "e4bc767d-700c-40da-9565-017f4a24b0a1", 
+        "created": "2019-09-11T12:37:28.752136", 
+        "reference": "MIN/0120001/19", 
+        "caseDeadline": "2019-10-09", 
+        "dateReceived": "2019-09-11", 
+        "primaryTopic": "None", 
+        "primaryCorrespondent": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5",
+        "fullname": "Adam Afriyie MP",
+        "allocatedToUUID": "1102b26b-06ed-4247-a1b3-699167f2dbcd"
+        }',
     'cs-dev', 
     NOW(), 
     'CASE_CREATED', 

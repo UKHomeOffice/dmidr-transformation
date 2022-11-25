@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: audit_data
+    database: "{{ env_var('transformation_db_name') }}"
+    schema: transformation
+    tables: 
+      - name: audit_event
