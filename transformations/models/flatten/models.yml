@@ -1,5 +1,8 @@
 version: 2
 
-models:
+sources:
   - name: audit_data
-    database: not-prod
+    database: transformation
+    schema: transformation
+    tables: 
+      - name: audit_event
