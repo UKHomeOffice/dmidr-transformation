@@ -1,14 +1,14 @@
 -- Create view for due cases
 WITH mpam_due_cases AS (
    SELECT case_reference as CTSRef,
-       date_created as "Case created date",
-       business_area as "Business area",
-       allocated_to_uuid as "current handler user id",
-       case_deadline as "due date"
+       date_created as "Case Created Date",
+       business_area as "Business Area",
+       allocated_to_uuid as "Current Handler User Id",
+       case_deadline as "Due Date"
 
     FROM {{ref('flatten')}}
 
-    WHERE case_type = 'MIN'
+    WHERE case_type = 'MPAM'
 )
 
 SELECT * FROM mpam_due_cases

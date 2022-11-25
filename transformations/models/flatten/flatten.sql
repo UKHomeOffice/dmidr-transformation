@@ -1,4 +1,4 @@
-WITH CASES AS (
+WITH cases AS (
     SELECT case_uuid,
            audit_payload::json ->> 'type' AS case_type,
            TO_DATE(LEFT(audit_payload::json ->> 'created', 9), 'YYYY-MM-DD') AS date_created,
@@ -10,4 +10,4 @@ WITH CASES AS (
     FROM {{source('audit_data', 'audit_event')}}
 )
 
-SELECT * FROM CASES
+SELECT * FROM cases
