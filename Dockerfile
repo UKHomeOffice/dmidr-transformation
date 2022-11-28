@@ -1,8 +1,8 @@
 FROM amd64/alpine:3.16
 
-RUN mkdir transformations
+RUN adduser -D -u 1001 transformation
 
-COPY transformations transformations/
+COPY --chown=1001 transformations transformations/
 COPY requirements.txt .
 COPY extract_data.sh .
 COPY run_etl.sh .
@@ -24,5 +24,7 @@ RUN /.venv/bin/python -m pip install --upgrade pip
 RUN /.venv/bin/pip install -r requirements.txt
 
 RUN /.venv/bin/dbt --version
+
+USER 1001
 
 CMD [ "./run_etl.sh", "sleep", "infinity" ]

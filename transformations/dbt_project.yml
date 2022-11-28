@@ -4,3 +4,5 @@ profile: 'transformation_db'
 version: 1.0.0
 
 model-paths: [models]
+log-path: /transformations/dbt-logs
+target-path: /transformations/targets

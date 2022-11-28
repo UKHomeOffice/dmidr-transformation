@@ -18,7 +18,7 @@ spec:
               resources: {{- toYaml .Values.app.resources | nindent 16 }}
               env: {{- tpl (toYaml .Values.app.env) . | nindent 16 }}
               securityContext:
-                runAsNonRoot: false
+                runAsNonRoot: true
                 capabilities:
                   drop:
                     - SETUID
