@@ -25,4 +25,13 @@ RUN /.venv/bin/pip install -r requirements.txt
 
 RUN /.venv/bin/dbt --version
 
+RUN adduser -D -u 1001 transformation
+
+USER root
+#RUN chown 1001 .
+RUN mkdir dbt-logs
+RUN chown -R 1001 dbt-logs
+
+USER 1001
+
 CMD [ "./run_etl.sh", "sleep", "infinity" ]
