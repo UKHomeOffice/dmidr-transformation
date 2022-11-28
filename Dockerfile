@@ -6,6 +6,7 @@ COPY transformations transformations/
 COPY requirements.txt .
 COPY extract_data.sh .
 COPY run_etl.sh .
+COPY output_test.sh .
 
 ENV PYTHONPATH ./
 
@@ -24,4 +25,4 @@ RUN /.venv/bin/pip install -r requirements.txt
 
 RUN /.venv/bin/dbt --version
 
-CMD [ "./run_etl.sh" ]
+CMD [ "./run_etl.sh", "sleep", "infinity" ]
