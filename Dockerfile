@@ -1,8 +1,8 @@
 FROM amd64/alpine:3.16
 
-RUN mkdir transformations
+RUN adduser -D -u 1001 transformation
 
-COPY transformations transformations/
+COPY --chown=1001 transformations transformations/
 COPY requirements.txt .
 COPY extract_data.sh .
 COPY run_etl.sh .
@@ -24,13 +24,6 @@ RUN /.venv/bin/python -m pip install --upgrade pip
 RUN /.venv/bin/pip install -r requirements.txt
 
 RUN /.venv/bin/dbt --version
-
-RUN adduser -D -u 1001 transformation
-
-USER root
-#RUN chown 1001 .
-RUN mkdir dbt-logs
-RUN chown -R 1001 dbt-logs
 
 USER 1001
 
