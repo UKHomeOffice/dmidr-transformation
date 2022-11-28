@@ -11,4 +11,5 @@ cd transformations
 /.venv/bin/dbt run --profiles-dir profiles
 
 sleep 10
+cd ../
 ./output_test.sh
