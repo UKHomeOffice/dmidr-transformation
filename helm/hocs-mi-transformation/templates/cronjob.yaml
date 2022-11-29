@@ -6,7 +6,7 @@ metadata:
     version: {{ .Values.version }}
   annotations: {{- toYaml .Values.deployment.annotations | nindent 4 }}
 spec:
-  schedule: "0-59/5 * * * 1-5" # 9:05 Mon-Fri
+  schedule: "0-59/30 * * * 1-5" # 9:05 Mon-Fri
   jobTemplate:
     spec:
       template:
