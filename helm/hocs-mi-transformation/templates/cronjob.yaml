@@ -12,6 +12,7 @@ spec:
       template:
         spec:
           restartPolicy: Never
+          concurrencyPolicy: Forbid
           containers:
             - name: hocs-mi-transformation
               image: 'quay.io/ukhomeofficedigital/hocs-mi-transformation:{{ .Values.version }}'
