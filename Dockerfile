@@ -27,4 +27,4 @@ RUN /.venv/bin/dbt --version
 
 USER 1001
 
-CMD [ "./run_etl.sh", "sleep", "infinity" ]
+CMD [ "./run_etl.sh" ]
