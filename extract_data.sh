@@ -46,5 +46,5 @@ CREATE TABLE IF NOT EXISTS transformation.audit_event
     PRIMARY KEY (uuid, audit_timestamp, type),
     CONSTRAINT audit_event_uuid_idempotent UNIQUE (uuid, audit_timestamp, type));
 
-INSERT INTO transformation.audit_event SELECT * FROM transformation.foreign_audit_event;
+INSERT INTO transformation.audit_event SELECT * FROM transformation.foreign_audit_event WHERE audit_timestamp >= '2022-01-01';
 EOF
