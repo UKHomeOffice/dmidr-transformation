@@ -7,7 +7,7 @@ WITH cases AS (
            audit_payload::json ->> 'reference' AS case_reference,
            audit_payload::json -> 'data' ->> 'bus_area' AS business_area,
            audit_payload::json -> 'data' ->> 'allocatedToUUID' AS allocated_to_uuid
-    FROM {{source('audit_data', 'audit_event')}}
+    FROM {{ source('audit_data', 'audit_event') }}
 )
 
 SELECT * FROM cases

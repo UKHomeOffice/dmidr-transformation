@@ -4,7 +4,7 @@ transformation_db:
     not-prod:
       type: postgres
       host: "{{ env_var('transformation_db_host') }}"
-      port: 5432 # need to get it as an environment variable
+      port: "{{ env_var('transformation_db_port') | as_number }}" # need to get it as an environment variable
       dbname: "{{ env_var('transformation_db_name') }}"
       schema: public
       threads: 1
