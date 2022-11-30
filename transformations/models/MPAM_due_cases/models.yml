@@ -1,6 +1,20 @@
 version: 2
 
 models:
-  - name: case_table
+  - name: mpam_due_cases
     columns:
-      - name: case_type, case_deadline, case_uuid
+      - name: CTSRef
+      - name: Case Created Date
+      - name: Business Area
+      - name: Current Handler User Id
+      - name: Due Date
+      - name: Workflow
+      - name: Directorate
+      - name: Signee
+      - name: Stage
+  - name: mpam_due_cases_aggregate
+    columns:
+      - name: Total due this week
+      - name: Total due next 4 weeks
+      - name: Total out of service standard
+      - name: Total cases

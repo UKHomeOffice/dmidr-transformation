@@ -9,7 +9,7 @@ WITH mpam_due_cases_aggregate_data AS (
                CASE WHEN case_deadline BETWEEN date_trunc('week', NOW()::timestamp) AND date_trunc('week', NOW()::timestamp) + interval '28 day' THEN 1 ELSE 0 END as "Due in next 4 weeks",
                CASE WHEN case_deadline < NOW() THEN 1 ELSE 0 END as "Out of service standard"
 
-        FROM {{ ref('flatten') }}
+        FROM {{ ref('flattenV2') }}
         WHERE case_type = 'MPAM'
        ) as case_flags
 )
