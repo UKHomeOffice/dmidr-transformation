@@ -1,19 +1,6 @@
-WITH case_latest_stage AS (
-    SELECT *
-
-    FROM (
-        SELECT case_uuid,
-               stage,
-               RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp) AS RANKING
-
-        FROM {{ ref('flattenV2') }}
-
-        WHERE stage IS NOT NULL
-         ) AS stage_ranking
-),
-mpam_due_cases AS (
+WITH mpam_due_cases AS (
     SELECT c.case_uuid,
-           case_reference as CTSRef,
+           case_reference as "CTSRef",
            date_created as "Case Created Date",
            business_area as "Business Area",
            allocated_to_uuid as "Current Handler User Id",
@@ -21,19 +8,14 @@ mpam_due_cases AS (
            'WORKFLOW' as "Workflow",
            'DIRECTORATE' as "Directorate",
            'SIGNEE' as "Signee",
-           cs.stage as Stage
+           stage as "Stage"
 
-    FROM {{ ref('flattenV2') }} AS c
-
-    LEFT OUTER JOIN
-    case_latest_stage AS cs
-    ON
-    c.case_uuid = cs.case_uuid
+    FROM {{ ref('merged_cases') }} AS c
 
     WHERE case_type = 'MPAM'
 )
 
-SELECT CTSRef,
+SELECT "CTSRef",
        "Case Created Date",
        "Business Area",
        "Current Handler User Id",
@@ -41,6 +23,6 @@ SELECT CTSRef,
        "Workflow",
        "Directorate",
        "Signee",
-       Stage
+       "Stage"
 
 FROM mpam_due_cases
