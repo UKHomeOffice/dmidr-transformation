@@ -12,7 +12,7 @@ ranked_case_type AS(
     FROM (
              SELECT case_uuid,
                     case_type,
-                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM {{ ref('flatten_audit_data') }}
 
@@ -27,7 +27,7 @@ ranked_date_created AS (
     FROM (
              SELECT case_uuid,
                     date_created,
-                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM {{ ref('flatten_audit_data') }}
 
@@ -42,7 +42,7 @@ ranked_date_received AS (
     FROM (
              SELECT case_uuid,
                     date_received,
-                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM {{ ref('flatten_audit_data') }}
 
@@ -57,7 +57,7 @@ ranked_case_deadline AS (
     FROM (
              SELECT case_uuid,
                     case_deadline,
-                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
             FROM  {{ ref('flatten_audit_data') }}
 
@@ -72,7 +72,7 @@ ranked_case_reference AS (
     FROM (
              SELECT case_uuid,
                     case_reference,
-                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
             FROM  {{ ref('flatten_audit_data') }}
 
@@ -87,7 +87,7 @@ ranked_business_area AS (
     FROM (
              SELECT case_uuid,
                     business_area,
-                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
             FROM  {{ ref('flatten_audit_data') }}
 
@@ -102,7 +102,7 @@ ranked_allocated_to_uuid AS (
     FROM (
              SELECT case_uuid,
                     allocated_to_uuid,
-                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
             FROM  {{ ref('flatten_audit_data') }}
 
@@ -117,7 +117,7 @@ ranked_stage AS (
     FROM (
              SELECT case_uuid,
                     stage,
-                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp) as rank
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM  {{ ref('flatten_audit_data') }}
 
