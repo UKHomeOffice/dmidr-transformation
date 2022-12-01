@@ -32,9 +32,9 @@ VALUES(1, uuid_generate_v1(), uuid_generate_v1(), uuid_generate_v1(), '1', 'hocs
             "CopyNumberTen": "TRUE", 
             "Correspondents": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5", 
             "OriginalChannel": "EMAIL", 
-            "DateOfCorrespondence": "2022-11-28"
+            "DateOfCorrespondence": "2022-11-28",
+            "bus_area": "UKVI"
         },
-        "BusinessArea": "UKVI",
         "type": "MPAM", 
         "uuid": "22bc767d-700c-40da-9565-017f4a24b0a1", 
         "created": "2022-11-28T12:37:28.752136", 
@@ -59,9 +59,9 @@ VALUES(2, '036f8240-70c0-11ed-873f-0242ac120001', '036f8240-70c0-11ed-873f-0242a
             "CopyNumberTen": "TRUE", 
             "Correspondents": "30bea4ea-3c10-46da-9c3f-cf972a7c32b5", 
             "OriginalChannel": "EMAIL", 
-            "DateOfCorrespondence": "2022-11-28"
+            "DateOfCorrespondence": "2022-11-28",
+            "bus_area": "IE"
         },
-        "BusinessArea": "IE",
         "type": "MPAM", 
         "uuid": "22bc767d-700c-40da-9565-017f4a24b0a1", 
         "created": "2022-11-28T12:37:28.752136", 
