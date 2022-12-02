@@ -8,7 +8,8 @@ WITH mpam_due_cases AS (
            'WORKFLOW' as "Workflow",
            'DIRECTORATE' as "Directorate",
            'SIGNEE' as "Signee",
-           stage as "Stage"
+           stage as "Stage",
+           To_Char(case_deadline, 'Day') as "Day"
 
     FROM {{ ref('merged_cases') }} AS c
 
@@ -23,6 +24,7 @@ SELECT "CTSRef",
        "Workflow",
        "Directorate",
        "Signee",
-       "Stage"
+       "Stage",
+       "Day"
 
 FROM mpam_due_cases

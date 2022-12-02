@@ -12,6 +12,7 @@ models:
       - name: Directorate
       - name: Signee
       - name: Stage
+      - name: Day
   - name: mpam_due_cases_aggregate
     columns:
       - name: Total due this week
