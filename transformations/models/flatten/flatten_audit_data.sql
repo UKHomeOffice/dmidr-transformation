@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized = "table"
+  )
+}}
+
 WITH cases AS (
     SELECT case_uuid,
            audit_payload::json ->> 'type' AS case_type,
