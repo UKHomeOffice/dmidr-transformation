@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: mpam_open_cases
+    columns:
+      - name: Case ID
+      - name: Business Area
+      - name: Age
+      - name: Deadline
+      - name: Stage
