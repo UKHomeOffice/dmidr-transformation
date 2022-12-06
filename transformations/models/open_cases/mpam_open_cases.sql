@@ -3,7 +3,7 @@ SELECT "Case ID",
        "Age",
        "Deadline",
        "Stage",
-       "Outside service standard"
+       "Outside Service Standard"
 
 FROM {{ ref('open_cases') }}
 

@@ -8,3 +8,4 @@ models:
       - name: Age
       - name: Deadline
       - name: Stage
+      - name: Outside Service Standard
