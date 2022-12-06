@@ -1,8 +1,9 @@
-SELECT case_uuid AS "Case ID",
-       business_area AS "Business Area",
-       age AS "Age",
-       case_deadline AS "Deadline",
-       stage AS "Stage"
+SELECT "Case ID",
+       "Business Area",
+       "Age",
+       "Deadline",
+       "Stage",
+       "Outside service standard"
 
 FROM {{ ref('open_cases') }}
 
