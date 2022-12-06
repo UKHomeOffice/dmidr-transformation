@@ -6,7 +6,8 @@
 
 WITH cases AS (
     SELECT case_uuid,
-           audit_payload::json ->> 'type' AS case_type,
+           type as audit_type,
+           audit_payload::json ->> 'type' AS user_group,
            TO_DATE(LEFT(audit_payload::json ->> 'created', 9), 'YYYY-MM-DD') AS date_created,
            TO_DATE(audit_payload::json ->> 'dateReceived', 'YYYY-MM-DD') AS date_received,
            TO_DATE(audit_payload::json ->> 'caseDeadline', 'YYYY-MM-DD') AS case_deadline,

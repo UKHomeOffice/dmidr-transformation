@@ -10,4 +10,4 @@ SELECT "Case ID",
 
 FROM {{ ref('intake_and_output') }}
 
-WHERE case_type = 'MPAM'
+WHERE user_group = 'MPAM'

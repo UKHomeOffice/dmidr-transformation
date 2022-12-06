@@ -7,4 +7,4 @@ SELECT "Case ID",
 
 FROM {{ ref('open_cases') }}
 
-WHERE case_type = 'MPAM'
+WHERE user_group = 'MPAM'

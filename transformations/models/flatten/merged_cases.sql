@@ -6,17 +6,17 @@ WITH cases AS (
 
     FROM {{ ref('flatten_audit_data') }}
 ),
-ranked_case_type AS(
+ranked_user_group AS(
     SELECT *
 
     FROM (
              SELECT case_uuid,
-                    case_type,
+                    user_group,
                     RANK() OVER (PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM {{ ref('flatten_audit_data') }}
 
-             WHERE case_type is not null
+             WHERE user_group IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -31,7 +31,7 @@ ranked_date_created AS (
 
              FROM {{ ref('flatten_audit_data') }}
 
-             WHERE date_created is not null
+             WHERE date_created IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -46,7 +46,7 @@ ranked_date_received AS (
 
              FROM {{ ref('flatten_audit_data') }}
 
-             WHERE date_received is not null
+             WHERE date_received IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -61,7 +61,7 @@ ranked_case_deadline AS (
 
             FROM  {{ ref('flatten_audit_data') }}
 
-            WHERE case_deadline is not null
+            WHERE case_deadline IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -76,7 +76,7 @@ ranked_case_reference AS (
 
             FROM  {{ ref('flatten_audit_data') }}
 
-            WHERE case_reference is not null
+            WHERE case_reference IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -91,7 +91,7 @@ ranked_business_area AS (
 
             FROM  {{ ref('flatten_audit_data') }}
 
-            WHERE business_area is not null
+            WHERE business_area IS NOT NULL
          )  AS ranked
 
     WHERE rank = 1
@@ -106,7 +106,7 @@ ranked_allocated_to_uuid AS (
 
             FROM  {{ ref('flatten_audit_data') }}
 
-            WHERE allocated_to_uuid is not null
+            WHERE allocated_to_uuid IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -121,7 +121,7 @@ ranked_stage AS (
 
              FROM  {{ ref('flatten_audit_data') }}
 
-             WHERE stage is not null
+             WHERE stage IS NOT NULL
          ) AS ranked
 
     WHERE rank = 1
@@ -133,7 +133,7 @@ completed_case_details AS (
 
     FROM {{ ref('flatten_audit_data') }}
 
-    WHERE stage = 'CASE_COMPLETED'
+    WHERE audit_type = 'CASE_COMPLETED'
 ),
 -- This is temporary. We don't currently know how to
 -- determined whether a case has been responded to.
@@ -144,11 +144,11 @@ case_response_details AS (
 
     FROM {{ ref('flatten_audit_data') }}
 
-    WHERE stage = 'CASE_RESPONDED'
+    WHERE audit_type = 'CASE_RESPONDED'
 )
 
 SELECT cases.case_uuid,
-       case_type,
+       user_group,
        date_created,
        date_received,
        case_deadline,
@@ -157,16 +157,16 @@ SELECT cases.case_uuid,
        allocated_to_uuid,
        responded,
        date_responded,
-       completed,
+       COALESCE(completed, False) AS completed,
        date_completed,
        stage
 
 FROM cases
 
 LEFT JOIN
-ranked_case_type
+ranked_user_group
 ON
-cases.case_uuid = ranked_case_type.case_uuid
+cases.case_uuid = ranked_user_group.case_uuid
 
 LEFT JOIN
 ranked_allocated_to_uuid

@@ -8,7 +8,7 @@ WITH intake_and_output AS (
            responded AS "Responded",
            date_responded AS "Date Responded",
            To_Char(case_deadline, 'fmDay') AS "Day",
-           case_type
+           user_group
 
     FROM {{ ref('merged_cases') }}
 )
