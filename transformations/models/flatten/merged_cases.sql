@@ -125,6 +125,26 @@ ranked_stage AS (
          ) AS ranked
 
     WHERE rank = 1
+),
+completed_case_details AS (
+    SELECT case_uuid,
+           True as completed,
+           audit_timestamp::date AS date_completed
+
+    FROM {{ ref('flatten_audit_data') }}
+
+    WHERE stage = 'CASE_COMPLETED'
+),
+-- This is temporary. We don't currently know how to
+-- determined whether a case has been responded to.
+case_response_details AS (
+    SELECT case_uuid,
+           True as responded,
+           audit_timestamp::date AS date_responded
+
+    FROM {{ ref('flatten_audit_data') }}
+
+    WHERE stage = 'CASE_RESPONDED'
 )
 
 SELECT cases.case_uuid,
@@ -135,6 +155,10 @@ SELECT cases.case_uuid,
        case_reference,
        business_area,
        allocated_to_uuid,
+       responded,
+       date_responded,
+       completed,
+       date_completed,
        stage
 
 FROM cases
@@ -178,3 +202,13 @@ LEFT JOIN
 ranked_stage
 ON
 cases.case_uuid = ranked_stage.case_uuid
+
+LEFT JOIN
+completed_case_details
+ON
+cases.case_uuid = completed_case_details.case_uuid
+
+LEFT JOIN
+case_response_details
+ON
+cases.case_uuid = case_response_details.case_uuid
