@@ -13,7 +13,7 @@ WITH mpam_due_cases AS (
 
     FROM {{ ref('merged_cases') }} AS c
 
-    WHERE case_type = 'MPAM'
+    WHERE user_group = 'MPAM'
 )
 
 SELECT "CTSRef",

@@ -4,12 +4,12 @@ WITH open_cases AS (
            NOW()::date - date_created::date AS "Age",
            case_deadline AS "Deadline",
            stage AS "Stage",
-           case_type,
+           user_group,
            CASE WHEN case_deadline > NOW() THEN 1 ELSE 0 END AS "Outside Service Standard"
 
     FROM {{ ref('merged_cases') }}
 
-    WHERE stage != 'CASE_CLOSED'
+    WHERE NOT completed
 )
 
 SELECT * FROM open_cases

@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: mpam_intake_and_output
+    columns:
+      - name: Case ID
+      - name: Business Area
+      - name: Date Created
+      - name: Date Received
+      - name: Completed
+      - name: Date Completed
+      - name: Responded
+      - name: Date Responded
+      - name: Day
