@@ -7,7 +7,7 @@ models:
       - name: Awaiting QA
       - name: Answered
       - name: Answered on time
-      - name: % Answered on time to date
+      - name: Percentage answered on time to date
       - name: Unanswered
       - name: Required to achieve 95% target
       - name: Outstanding required to achieve 95% target

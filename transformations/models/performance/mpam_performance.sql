@@ -1,9 +1,9 @@
 WITH mpam_performance AS (
     SELECT SUM("Due this week") as "Total cases due",
-           0 as "Awaiting QA"
+           0 as "Awaiting QA",
            SUM("Answered") as "Answered",
            SUM("Answered on time") as "Answered on time",
-           (SUM("Answered on time") / SUM("Answered")) * 100 as "% Answered on time to date",
+           (SUM("Answered on time") / SUM("Answered")) * 100 as "Percentage answered on time to date",
            SUM("Unanswered") as "Unanswered",
            SUM("Due this week") * 0.95 AS "Required to achieve 95% target",
            (SUM("Due this week") * 0.95) - SUM("Answered") as "Outstanding required to achieve 95% target",
