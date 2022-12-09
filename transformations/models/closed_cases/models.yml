@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mpam_aggregate_closed_cases
+    columns:
+      - name: Total cases closed
+      - name: Cases closed inside of service standard
+      - name: Cases closed outside of service standard
+  - name: mpam_aggregate_closed_cases_by_age 
+    columns:
+      - name: Total cases closed
+      - name: Age (days)
+  - name: mpam_aggregate_closed_cases_by_outcome
+    columns:
+      - name: Upheld
+      - name: Partially upheld
+      - name: Not upheld
