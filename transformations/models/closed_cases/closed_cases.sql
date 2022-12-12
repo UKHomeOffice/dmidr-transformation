@@ -1,4 +1,4 @@
-WITH open_cases AS (
+WITH closed_cases AS (
     SELECT case_uuid AS "Case ID",
            business_area AS "Business Area",
            NOW()::date - date_created::date AS "Age",
