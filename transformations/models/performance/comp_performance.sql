@@ -1,4 +1,4 @@
-WITH mpam_performance AS (
+WITH comp_performance AS (
        SELECT "Due",
        "Awaiting QA",
        "Answered",
@@ -12,4 +12,4 @@ WITH mpam_performance AS (
        WHERE user_group = 'COMP'
 ) 
 
-SELECT * FROM mpam_performance
+SELECT * FROM comp_performance
