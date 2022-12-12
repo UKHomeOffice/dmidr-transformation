@@ -5,7 +5,7 @@ WITH mpam_aggregate_closed_cases AS (
     
     FROM (
         SELECT "Case ID",
-               CASE WHEN "Outside Service Standard" = 1 THEN 1 ELSE 0 END as "Closed outside"
+               CASE WHEN "Outside Service Standard" = 1 THEN 1 ELSE 0 END as "Closed outside",
                CASE WHEN "Outside Service Standard" = 0 THEN 1 ELSE 0 END as "Closed inside"
 
         FROM {{ ref('closed_cases') }}
