@@ -5,7 +5,7 @@ WITH comp_due_cases_aggregate_data AS (
            "Total cases"
            
     
-   FROM {{ ref('due_cases_aggregate_data') }}
+   FROM {{ ref('due_cases_aggregate') }}
 
    WHERE user_group = 'COMP'
 )
