@@ -24,6 +24,7 @@ SELECT "CTSRef",
        "Directorate",
        "Signee",
        "Stage",
-       "Day"
+       "Day",
+       user_group
 
 FROM due_cases

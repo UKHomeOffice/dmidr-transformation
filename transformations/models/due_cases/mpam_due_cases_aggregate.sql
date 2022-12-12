@@ -5,7 +5,7 @@ WITH mpam_due_cases_aggregate_data AS (
            "Total cases"
            
     
-   FROM {{ ref('due_cases_aggregate') }}
+   FROM {{ ref('due_cases_aggregate_data') }}
 
    WHERE user_group = 'MPAM'
 )
