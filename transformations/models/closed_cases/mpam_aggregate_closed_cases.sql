@@ -1,5 +1,5 @@
 WITH mpam_aggregate_closed_cases AS (
-    SELECT SUM("Case ID") as "Total cases closed",
+    SELECT COUNT("Case ID") as "Total cases closed",
            SUM("Closed inside") as "Cases closed inside of service standard",
            SUM("Closed outside") as "Cases closed outside of service standard"
     
