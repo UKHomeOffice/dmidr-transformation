@@ -9,7 +9,7 @@ WITH mpam_performance AS (
        "Outstanding required to achieve 95% target",
        "Age profile"
        FROM {{ ref('performance') }}
-       WHERE user_group = 'MPAM'
+       WHERE user_group = 'COMP'
 ) 
 
 SELECT * FROM mpam_performance
