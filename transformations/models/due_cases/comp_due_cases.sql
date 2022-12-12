@@ -1,4 +1,4 @@
-WITH mpam_due_cases AS (
+WITH comp_due_cases AS (
     SELECT "CTSRef",
        "Case Created Date",
        "Business Area",
@@ -14,4 +14,4 @@ WITH mpam_due_cases AS (
     WHERE user_group = 'COMP'
 )
 
-SELECT * FROM mpam_due_cases
+SELECT * FROM comp_due_cases
