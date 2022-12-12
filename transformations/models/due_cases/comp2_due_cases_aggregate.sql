@@ -1,4 +1,4 @@
-WITH mpam_due_cases_aggregate_data AS (
+WITH comp2_due_cases_aggregate_data AS (
     SELECT "Total due this week",
            "Total due next 4 weeks",
            "Total out of service standard",
@@ -7,7 +7,7 @@ WITH mpam_due_cases_aggregate_data AS (
     
    FROM {{ ref('due_cases_aggregate') }}
 
-   WHERE user_group = 'MPAM'
+   WHERE user_group = 'COMP2'
 )
 
-SELECT * FROM mpam_due_cases_aggregate_data
+SELECT * FROM comp2_due_cases_aggregate_data

@@ -11,7 +11,7 @@ WITH mpam_due_cases AS (
        "Day"
     FROM {{ ref('due_cases') }} AS c
 
-    WHERE user_group = 'MPAM'
+    WHERE user_group = 'COMP'
 )
 
 SELECT * FROM mpam_due_cases
