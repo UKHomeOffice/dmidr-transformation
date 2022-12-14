@@ -7,6 +7,7 @@ COPY requirements.txt .
 COPY extract_data.sh .
 COPY run_etl.sh .
 COPY output_test.sh .
+COPY extract_data.py .
 
 ENV PYTHONPATH ./
 
@@ -27,4 +28,5 @@ RUN /.venv/bin/dbt --version
 
 USER 1001
 
-CMD [ "./run_etl.sh" ]
+ENTRYPOINT [ "/.venv/bin/python" ]
+CMD [ "./extract_data.py" ]
