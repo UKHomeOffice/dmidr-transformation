@@ -8,6 +8,8 @@ PGPASSWORD=${transformation_db_password} psql -h${transformation_db_host} -p${tr
 
 CREATE schema IF NOT EXISTS transformation;
 
+DROP TABLE IF EXISTS transformation.audit_event;
+
 CREATE TABLE IF NOT EXISTS transformation.audit_event
 (
     id                     BIGSERIAL,
