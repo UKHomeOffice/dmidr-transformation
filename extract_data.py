@@ -7,6 +7,11 @@ REPLICA_DATABASE = "replica"
 REPLICA_SCHEMA = os.environ.get("replica_db_schema")
 
 
+INSERT_QUERY = f'INSERT INTO {TRANSFORMATION_SCHEMA}.audit_event(id,uuid,case_uuid,stage_uuid,correlation_id,' \
+               f'raising_service,namespace,audit_timestamp,type,user_id,case_type,deleted) ' \
+               f'VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+
+
 def create_db_connection(database):
     return psycopg2.connect(
         host=os.environ.get(f"{database}_db_host"),
@@ -23,14 +28,19 @@ def extract_data():
             with replica_connection.cursor(name='replica_fetch_large_result') as replica_cursor:
                 replica_cursor.execute(f'select * from {REPLICA_SCHEMA}.audit_event')
 
-                while True:
-                    records = replica_cursor.fetchmany(size=10)
+                with transform_connection.cursor() as transform_cursor:
 
-                    if not records:
-                        break
+                    while True:
+                        records = replica_cursor.fetchmany(size=10)
 
-                    for r in records:
-                        print(r)
+                        if not records:
+                            break
+
+                        for r in records:
+                            r = list(r)
+                            del r[6]
+                            print(r)
+                            transform_cursor.execute(INSERT_QUERY, r)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
