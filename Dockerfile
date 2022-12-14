@@ -28,7 +28,4 @@ RUN /.venv/bin/dbt --version
 
 USER 1001
 
-CMD [ "./extract_data.sh" ]
-
-ENTRYPOINT [ "/.venv/bin/python" ]
-CMD [ "./extract_data.py" ]
+CMD [ "./run_etl.sh" ]

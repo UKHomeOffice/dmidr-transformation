@@ -1,5 +1,6 @@
 import psycopg2
 import os
+import json
 
 TRANSFORM_DATABASE = "transformation"
 TRANSFORMATION_SCHEMA = "transformation"
@@ -7,9 +8,9 @@ REPLICA_DATABASE = "replica"
 REPLICA_SCHEMA = os.environ.get("replica_db_schema")
 
 
-INSERT_QUERY = f'INSERT INTO {TRANSFORMATION_SCHEMA}.audit_event(id,uuid,case_uuid,stage_uuid,correlation_id,' \
-               f'raising_service,namespace,audit_timestamp,type,user_id,case_type,deleted) ' \
-               f'VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+INSERT_QUERY = f'insert into {TRANSFORMATION_SCHEMA}.audit_event(id,uuid,case_uuid,stage_uuid,correlation_id,' \
+               f'raising_service,audit_payload,namespace,audit_timestamp,type,user_id,case_type,deleted) ' \
+               f'VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
 
 def create_db_connection(database):
@@ -38,8 +39,7 @@ def extract_data():
 
                         for r in records:
                             r = list(r)
-                            del r[6]
-                            print(r)
+                            r[6] = json.dumps(r[6])
                             transform_cursor.execute(INSERT_QUERY, r)
 
     except (Exception, psycopg2.DatabaseError) as error:
