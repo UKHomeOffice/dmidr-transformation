@@ -11,5 +11,3 @@ cd transformations
 
 cd ../
 ./output_test.sh
-
-sleep 500
