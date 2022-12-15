@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-./extract_data.sh
+#./extract_data.sh
 
-/.venv/bin/python ./extract_data.py
+#/.venv/bin/python ./extract_data.py
 
 cd transformations
 /.venv/bin/dbt run --profiles-dir profiles
