@@ -27,7 +27,7 @@ def extract_data():
     try:
         with create_db_connection(REPLICA_DATABASE) as replica_connection, create_db_connection(TRANSFORM_DATABASE) as transform_connection:
             with replica_connection.cursor(name='replica_fetch_large_result') as replica_cursor:
-                replica_cursor.execute(f'select * from {REPLICA_SCHEMA}.audit_event')
+                replica_cursor.execute(f"select * from {REPLICA_SCHEMA}.audit_event WHERE audit_timestamp > NOW() - interval '6 month'")
 
                 with transform_connection.cursor() as transform_cursor:
 
