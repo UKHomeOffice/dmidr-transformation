@@ -131,7 +131,7 @@ ranked_owning_csu AS (
 
     FROM (
              SELECT case_uuid,
-                    owning_csu§,
+                    owning_csu,
                     RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
 
              FROM  {{ ref('flatten_audit_data') }}
