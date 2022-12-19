@@ -126,6 +126,21 @@ ranked_stage AS (
 
     WHERE rank = 1
 ),
+ranked_owning_csu AS (
+    SELECT *
+
+    FROM (
+             SELECT case_uuid,
+                    owning_csu§,
+                    RANK() OVER(PARTITION BY case_uuid ORDER BY audit_timestamp DESC) as rank
+
+             FROM  {{ ref('flatten_audit_data') }}
+
+             WHERE owning_csu IS NOT NULL
+         ) AS ranked
+
+    WHERE rank = 1
+),
 completed_case_details AS (
     SELECT case_uuid,
            True as completed,
