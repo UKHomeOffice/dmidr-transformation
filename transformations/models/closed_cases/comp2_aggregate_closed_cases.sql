@@ -9,7 +9,7 @@ WITH comp2_aggregate_closed_cases AS (
                CASE WHEN "Outside Service Standard" = 0 THEN 1 ELSE 0 END as "Closed inside"
 
         FROM {{ ref('closed_cases') }}
-        WHERE user_group = 'MPAM'
+        WHERE user_group = 'COMP2'
     ) as closed_cases
 )
 
