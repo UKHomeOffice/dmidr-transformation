@@ -12,3 +12,25 @@ models:
       - name: Required to achieve 95% target
       - name: Outstanding required to achieve 95% target
       - name: Age profile
+  - name: comp_performance
+    columns:
+      - name: Total cases due
+      - name: Awaiting QA
+      - name: Answered
+      - name: Answered on time
+      - name: Percentage answered on time to date
+      - name: Unanswered
+      - name: Required to achieve 95% target
+      - name: Outstanding required to achieve 95% target
+      - name: Age profile
+  - name: comp2_performance
+    columns:
+      - name: Total cases due
+      - name: Awaiting QA
+      - name: Answered
+      - name: Answered on time
+      - name: Percentage answered on time to date
+      - name: Unanswered
+      - name: Required to achieve 95% target
+      - name: Outstanding required to achieve 95% target
+      - name: Age profile
