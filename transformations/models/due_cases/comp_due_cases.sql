@@ -12,7 +12,7 @@ WITH comp_due_cases AS (
            date_created as "Case Created Date"
 
     FROM {{ ref('merged_cases') }} AS c
-    WHERE user_group = 'COMP'
+    WHERE user_group = 'COMP' AND NOT completed
 
 )
 
