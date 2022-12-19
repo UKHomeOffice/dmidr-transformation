@@ -6,7 +6,7 @@ WITH performance AS (
            (SUM("Answered on time") / NULLIF(SUM("Answered"), 0)) * 100 as "Performance",
            SUM("Unanswered") as "Unanswered",
            SUM("Due this week") * 0.95 AS "Required to achieve 95% target",
-           (SUM("Due this week") * 0.95) - NULLIF(SUM("Answered"), 0)) as "Outstanding required to achieve 95% target",
+           (SUM("Due this week") * 0.95) - NULLIF(SUM("Answered"), 0) as "Outstanding required to achieve 95% target",
            0 as "Age profile",
            user_group
 

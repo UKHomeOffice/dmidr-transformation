@@ -14,7 +14,6 @@ WITH comp2_due_cases_aggregate_data AS (
 
     ) as case_flags
 
-   GROUP BY user_group
 )
 
 SELECT * FROM comp2_due_cases_aggregate_data

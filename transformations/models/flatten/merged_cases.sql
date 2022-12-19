@@ -171,6 +171,7 @@ SELECT cases.case_uuid,
        business_area,
        allocated_to_uuid,
        COALESCE(responded, False) as responded,
+       owning_csu,
        date_responded,
        COALESCE(completed, False) AS completed,
        date_completed,
@@ -217,6 +218,11 @@ LEFT JOIN
 ranked_stage
 ON
 cases.case_uuid = ranked_stage.case_uuid
+
+LEFT JOIN
+ranked_owning_csu
+ON
+cases.case_uuid = ranked_owning_csu.case_uuid
 
 LEFT JOIN
 completed_case_details

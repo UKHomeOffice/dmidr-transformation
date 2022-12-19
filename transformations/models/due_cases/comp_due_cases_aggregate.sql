@@ -13,8 +13,6 @@ WITH comp_due_cases_aggregate_data AS (
         WHERE user_group = 'COMP' AND NOT completed
 
     ) as case_flags
-
-   GROUP BY user_group
 )
 
 SELECT * FROM comp_due_cases_aggregate_data
