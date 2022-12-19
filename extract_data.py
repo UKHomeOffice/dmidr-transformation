@@ -41,10 +41,11 @@ def extract_data():
                     if not records:
                         break
 
-                    for r in records:
+                    for record in records:
+                        record = list(record)
                         # Have to turn it into json object so that it can be inserted into a JSONB.
-                        r[AUDIT_PAYLOAD_INDEX] = json.dumps(r[AUDIT_PAYLOAD_INDEX])
-                        transform_cursor.execute(INSERT_QUERY, r)
+                        record[AUDIT_PAYLOAD_INDEX] = json.dumps(record[AUDIT_PAYLOAD_INDEX])
+                        transform_cursor.execute(INSERT_QUERY, record)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
