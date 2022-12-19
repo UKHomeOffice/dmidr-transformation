@@ -7,6 +7,7 @@ COPY requirements.txt .
 COPY extract_data.sh .
 COPY run_etl.sh .
 COPY output_test.sh .
+COPY extract_data.py .
 
 ENV PYTHONPATH ./
 
