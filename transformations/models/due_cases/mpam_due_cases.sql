@@ -1,5 +1,5 @@
 WITH mpam_due_cases AS (
-    SELECT c.case_uuid,
+    SELECT case_uuid,
            case_reference as "CTSRef",
            date_created as "Case Created Date",
            business_area as "Business Area",
@@ -11,9 +11,9 @@ WITH mpam_due_cases AS (
            stage as "Stage",
            To_Char(case_deadline, 'fmDay') as "Day"
 
-    FROM {{ ref('merged_cases') }} AS c
+    FROM {{ ref('merged_cases') }}
 
-    WHERE user_group = 'MPAM'
+    WHERE user_group = 'MPAM' AND NOT completed
 )
 
 SELECT "CTSRef",

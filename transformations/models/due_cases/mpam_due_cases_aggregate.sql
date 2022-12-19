@@ -10,7 +10,7 @@ WITH mpam_due_cases_aggregate_data AS (
                CASE WHEN case_deadline < NOW() THEN 1 ELSE 0 END as "Out of service standard"
 
         FROM {{ ref('merged_cases') }}
-        WHERE user_group = 'MPAM'
+        WHERE user_group = 'MPAM' AND NOT completed
        ) as case_flags
 )
 

@@ -2,10 +2,10 @@
 
 set -euo pipefail
 
-sleep 5
-./extract_data.sh
+#./extract_data.sh
 
-sleep 5
+#/.venv/bin/python ./extract_data.py
+
 cd transformations
 /.venv/bin/dbt run --profiles-dir profiles
 
