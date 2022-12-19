@@ -19,3 +19,41 @@ models:
       - name: Total due next 4 weeks
       - name: Total out of service standard
       - name: Total cases
+  - name: comp_due_cases
+    columns:
+      - name: Case Reference
+      - name: Owning CSU
+      - name: Business Area
+      - name: Location
+      - name: NRO
+      - name: Case Queue Name
+      - name: UKBA Recieved Date
+      - name: Status
+      - name: Current Handler User Id
+      - name: Due Date
+      - name: Case Created Date
+  - name: comp_due_cases_aggregate
+    columns:
+      - name: Total due this week
+      - name: Total due next 4 weeks
+      - name: Total out of service standard
+      - name: Total cases
+  - name: comp2_due_cases
+    columns:
+      - name: Case Reference
+      - name: Owning CSU
+      - name: Business Area
+      - name: Location
+      - name: NRO
+      - name: Case Queue Name
+      - name: UKBA Recieved Date
+      - name: Status
+      - name: Current Handler User Id
+      - name: Due Date
+      - name: Case Created Date
+  - name: comp2_due_cases_aggregate
+    columns:
+      - name: Total due this week
+      - name: Total due next 4 weeks
+      - name: Total out of service standard
+      - name: Total cases

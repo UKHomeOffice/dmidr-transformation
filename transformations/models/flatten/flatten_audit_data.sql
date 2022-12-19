@@ -14,6 +14,7 @@ WITH cases AS (
            audit_payload::json ->> 'reference' AS case_reference,
            audit_payload::json -> 'data' ->> 'BusArea' AS business_area,
            audit_payload::json -> 'data' ->> 'allocatedToUUID' AS allocated_to_uuid,
+           audit_payload::json -> 'data' ->> 'OwningCSU' AS owning_csu,
            audit_timestamp AS audit_timestamp,
            audit_payload::json ->> 'stage' AS stage
     FROM {{ source('audit_data', 'audit_event') }}

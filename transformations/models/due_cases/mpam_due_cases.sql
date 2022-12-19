@@ -12,19 +12,7 @@ WITH mpam_due_cases AS (
            To_Char(case_deadline, 'fmDay') as "Day"
 
     FROM {{ ref('merged_cases') }}
-
     WHERE user_group = 'MPAM' AND NOT completed
 )
 
-SELECT "CTSRef",
-       "Case Created Date",
-       "Business Area",
-       "Current Handler User Id",
-       "Due Date",
-       "Workflow",
-       "Directorate",
-       "Signee",
-       "Stage",
-       "Day"
-
-FROM mpam_due_cases
+SELECT * FROM mpam_due_cases
