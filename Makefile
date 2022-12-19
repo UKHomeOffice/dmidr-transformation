@@ -7,8 +7,11 @@ db-setup:
 build:
 	${DOCKER_COMPOSE} build
 
-serve: 
+serve:
 	${DOCKER_COMPOSE} up -d etl-process
+
+test:
+	${DOCKER_COMPOSE} run --rm etl-process /.venv/bin/dbt test --project-dir ./transformations/ --profiles-dir ./transformations/profiles/
 
 stop:
 	${DOCKER_COMPOSE} down

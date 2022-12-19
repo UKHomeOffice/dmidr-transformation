@@ -3,34 +3,112 @@ version: 2
 models:
   - name: mpam_performance
     columns:
-      - name: Total cases due
+      - name: Due
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Awaiting QA
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Answered
-      - name: Answered on time
-      - name: Percentage answered on time to date
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Completed in time
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Performance
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Unanswered
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Outstanding required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Age profile
   - name: comp_performance
     columns:
-      - name: Total cases due
+      - name: Due
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Awaiting QA
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Answered
-      - name: Answered on time
-      - name: Percentage answered on time to date
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Completed in time
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Performance
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Unanswered
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Outstanding required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Age profile
+        quote: true
+        tests:
+          - greater_than_zero
   - name: comp2_performance
     columns:
-      - name: Total cases due
+      - name: Due
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Awaiting QA
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Answered
-      - name: Answered on time
-      - name: Percentage answered on time to date
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Completed on time
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Performance
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Unanswered
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Outstanding required to achieve 95% target
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Age profile
+        quote: true
+        tests:
+          - greater_than_zero

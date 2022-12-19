@@ -1,4 +1,4 @@
-{% test gt_zero(model, column_name) %}
+{% test greater_than_zero(model, column_name) %}
 
 select *
 from {{ model }}
