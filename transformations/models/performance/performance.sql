@@ -3,10 +3,10 @@ WITH performance AS (
            0 as "Awaiting QA",
            SUM("Answered") as "Answered",
            SUM("Answered on time") as "Completed in time",
-           (SUM("Answered on time") / SUM("Answered")) * 100 as "Performance",
+           (SUM("Answered on time") / NULLIF(SUM("Answered"), 0)) * 100 as "Performance",
            SUM("Unanswered") as "Unanswered",
            SUM("Due this week") * 0.95 AS "Required to achieve 95% target",
-           (SUM("Due this week") * 0.95) - SUM("Answered") as "Outstanding required to achieve 95% target",
+           (SUM("Due this week") * 0.95) - NULLIF(SUM("Answered"), 0)) as "Outstanding required to achieve 95% target",
            0 as "Age profile",
            user_group
 
