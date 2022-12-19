@@ -48,6 +48,8 @@ services:
       - replica_db_password=postgres
       - replica_db_schema=replica
       - replica_db_port=5433
+    volumes:
+      - ./transformations/models/:/transformations/models/
     depends_on:
       transform-db:
         condition: service_started
