@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-#./extract_data.sh
+./extract_data.sh
 
 #/.venv/bin/python ./extract_data.py
 

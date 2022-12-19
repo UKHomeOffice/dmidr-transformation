@@ -219,6 +219,11 @@ ON
 cases.case_uuid = ranked_stage.case_uuid
 
 LEFT JOIN
+ranked_owning_csu
+ON
+cases.case_uuid = ranked_owning_csu.case_uuid
+
+LEFT JOIN
 completed_case_details
 ON
 cases.case_uuid = completed_case_details.case_uuid
