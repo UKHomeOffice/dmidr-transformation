@@ -5,7 +5,7 @@ WITH open_cases AS (
            case_deadline AS "Deadline",
            stage AS "Stage",
            user_group,
-           CASE WHEN case_deadline > NOW() THEN 1 ELSE 0 END AS "Outside Service Standard"
+           CASE WHEN case_deadline < NOW() THEN 1 ELSE 0 END AS "Outside Service Standard"
 
     FROM {{ ref('merged_cases') }}
 
