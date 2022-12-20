@@ -1,9 +1,10 @@
 {% test divide_by_zero_percentage(model, column_name, dependent_on) %}
 
 with dependent_on_zero as ( 
-    select *
+    select {{ column_name }}
     from {{ model }}
-    where {{ dependent_on }} = 0
+    group by {{ column_name }}
+    having sum({{ model }}."{{ dependent_on }}") = 0
 )
 
 select *

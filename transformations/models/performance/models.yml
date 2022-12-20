@@ -24,7 +24,7 @@ models:
         tests:
           - greater_than_zero
           - divide_by_zero_percentage:
-              dependent_on: ref('Answered')
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -61,7 +61,7 @@ models:
         tests:
           - greater_than_zero
           - divide_by_zero_percentage:
-              dependent_on: ref('Answered')
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -101,7 +101,7 @@ models:
         tests:
           - greater_than_zero
           - divide_by_zero_percentage:
-              dependent_on: ref('Answered')
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
