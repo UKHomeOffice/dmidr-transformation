@@ -8,6 +8,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
@@ -24,6 +27,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -32,6 +37,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
@@ -44,6 +51,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
@@ -60,6 +70,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -68,6 +80,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
@@ -83,6 +97,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
@@ -91,7 +108,7 @@ models:
         quote: true
         tests:
           - greater_than_zero
-      - name: Completed on time
+      - name: Completed in time
         quote: true
         tests:
           - greater_than_zero
@@ -99,6 +116,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -107,6 +126,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
