@@ -6,8 +6,9 @@ WITH performance AS (
            (SUM("Answered on time") / NULLIF(SUM("Answered"), 0)) * 100 as "Performance",
            SUM("Unanswered") as "Unanswered",
            SUM("Due this week") * 0.95 AS "Required to achieve 95% target",
-           (SUM("Due this week") * 0.95) - NULLIF(SUM("Answered"), 0) as "Outstanding required to achieve 95% target",
+           (SUM("Due this week") * 0.95) - SUM("Answered") as "Outstanding required to achieve 95% target",
            0 as "Age profile",
+           business_area AS "Business Area",
            user_group
 
     FROM (
@@ -15,11 +16,12 @@ WITH performance AS (
                CASE WHEN date_responded BETWEEN date_trunc('week', NOW()::timestamp) AND date_trunc('week', NOW()::timestamp) + interval '7 day' AND completed THEN 1 ELSE 0 END as "Answered",
                CASE WHEN date_responded BETWEEN date_trunc('week', NOW()::timestamp) AND date_trunc('week', NOW()::timestamp) + interval '7 day' AND date_completed < case_deadline THEN 1 ELSE 0 END as "Answered on time",
                CASE WHEN date_responded IS NULL THEN 1 ELSE 0 END as "Unanswered",
-               user_group
+               user_group,
+               business_area
 
         FROM {{ ref('merged_cases') }}
        ) as case_flags
-    GROUP BY user_group
+    GROUP BY user_group, business_area
 )
 
 SELECT * FROM performance

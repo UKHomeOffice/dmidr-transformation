@@ -43,6 +43,7 @@ def extract_data():
 
                     for r in records:
                         # Have to turn it into json object so that it can be inserted into a JSONB.
+                        r = list(r)
                         r[AUDIT_PAYLOAD_INDEX] = json.dumps(r[AUDIT_PAYLOAD_INDEX])
                         transform_cursor.execute(INSERT_QUERY, r)
 
