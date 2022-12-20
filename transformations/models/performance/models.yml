@@ -137,8 +137,14 @@ models:
         tests:
           - greater_than_zero
 
-  - name: mpam_performance
+  - name: mpam_performance_by_date
     columns:
       - name: Date
       - name: Amount Answered On Time
+        quote: true
+        tests:
+          - greater_than_zero
       - name: Amount Due
+        quote: true
+        tests:
+          - greater_than_zero
