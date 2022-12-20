@@ -7,3 +7,5 @@ transformations/target
 transformations/dbt-env
 transformations/logs
 transformations/dbt_packages
+transformations/targets
+transformations/dbt-logs

@@ -23,6 +23,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -58,6 +60,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
@@ -88,7 +92,7 @@ models:
         quote: true
         tests:
           - greater_than_zero
-      - name: Completed on time
+      - name: Completed in time
         quote: true
         tests:
           - greater_than_zero
@@ -96,6 +100,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - divide_by_zero_percentage:
+              dependent_on: Answered
       - name: Unanswered
         quote: true
         tests:
