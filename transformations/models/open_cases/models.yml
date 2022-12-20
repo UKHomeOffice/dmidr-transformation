@@ -6,19 +6,21 @@ models:
       - name: Case ID
         quote: true
         tests:
-          - not_empty
+          - not_null
           - not_completed:
               base_table: ref('merged_cases')
               base_key: case_uuid
       - name: Business Area
         quote: true
-        tests:
-          - not_empty
       - name: Age
+        quote: true
+        tests:
+            - not_null
+            - greater_than_zero_days
       - name: Deadline
         quote: true
         tests:
-          - not_empty
+          - not_null
       - name: Stage
         quote: true
         tests:
@@ -26,13 +28,13 @@ models:
       - name: Outside Service Standard
         quote: true
         tests:
-          - not_empty
+          - not_null
   - name: comp_open_cases
     columns:
       - name: Case ID
         quote: true
         tests:
-          - not_empty
+          - not_null
           - not_completed:
               base_table: ref('merged_cases')
               base_key: case_uuid
@@ -41,10 +43,14 @@ models:
         tests:
           - not_empty
       - name: Age
+        quote: true
+        tests:
+            - not_null
+            - greater_than_zero_days
       - name: Deadline
         quote: true
         tests:
-          - not_empty
+          - not_null
       - name: Stage
         quote: true
         tests:
@@ -52,13 +58,13 @@ models:
       - name: Outside Service Standard
         quote: true
         tests:
-          - not_empty
+          - not_null
   - name: comp2_open_cases
     columns:
       - name: Case ID
         quote: true
         tests:
-          - not_empty
+          - not_null
           - not_completed:
               base_table: ref('merged_cases')
               base_key: case_uuid
@@ -67,10 +73,14 @@ models:
         tests:
           - not_empty
       - name: Age
+        quote: true
+        tests:
+            - not_null
+            - greater_than_zero_days
       - name: Deadline
         quote: true
         tests:
-          - not_empty
+          - not_null
       - name: Stage
         quote: true
         tests:
@@ -78,4 +88,4 @@ models:
       - name: Outside Service Standard
         quote: true
         tests:
-          - not_empty
+          - not_null

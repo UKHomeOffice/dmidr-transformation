@@ -9,5 +9,9 @@ with base_table_count as (
 select {{ column_name }}
 from {{ model }}
 where {{ column_name }} <= (select max_weekly_count from base_table_count limit 1)
+and {{ column_name }} != 0
 
 {% endtest %}
+
+
+select "Due" from "transformation"."public"."mpam_performance" where "Due" <= (select count("case_deadline") as max_weekly_count from "transformation"."public"."merged_cases" where "case_deadline" between date_trunc('week', now()::timestamp) and date_trunc('week', now()::timestamp) + interval '7 day' limit 1);

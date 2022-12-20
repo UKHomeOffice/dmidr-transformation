@@ -1,7 +1,7 @@
-{% test not_higher_than(model, column_name, max_value_column) %}
+ {% test not_higher_than(model, column_name, max_value_column) %}
 
 with correct_max_value as (    
-    select case when {{ column_name }} < "{{ max_value_column }}" then 1 else 0 end as below_max
+    select case when {{ column_name }} >= "{{ max_value_column }}" then 1 else 0 end as below_max
     from {{ model }}
 )
 
