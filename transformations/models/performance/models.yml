@@ -33,6 +33,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
@@ -70,6 +72,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
@@ -110,6 +114,8 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_higher_than:
+              max_value_column: Due
       - name: Outstanding required to achieve 95% target
         quote: true
         tests:
