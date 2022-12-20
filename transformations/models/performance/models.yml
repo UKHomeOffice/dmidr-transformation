@@ -7,6 +7,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
@@ -46,6 +49,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
@@ -88,6 +94,9 @@ models:
         quote: true
         tests:
           - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
       - name: Awaiting QA
         quote: true
         tests:
