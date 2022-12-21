@@ -3,6 +3,7 @@ version: 2
 models:
   - name: mpam_performance
     columns:
+      - name: Business Area
       - name: Due
         quote: true
         tests:
@@ -45,6 +46,7 @@ models:
       - name: Age profile
   - name: comp_performance
     columns:
+      - name: Business Area
       - name: Due
         quote: true
         tests:
@@ -90,6 +92,7 @@ models:
           - greater_than_zero
   - name: comp2_performance
     columns:
+      - name: Business Area
       - name: Due
         quote: true
         tests:
@@ -130,6 +133,18 @@ models:
         tests:
           - greater_than_zero
       - name: Age profile
+        quote: true
+        tests:
+          - greater_than_zero
+
+  - name: mpam_performance_by_date
+    columns:
+      - name: Date
+      - name: Amount Answered On Time
+        quote: true
+        tests:
+          - greater_than_zero
+      - name: Amount Due
         quote: true
         tests:
           - greater_than_zero
