@@ -4,11 +4,77 @@ models:
   - name: mpam_intake_and_output
     columns:
       - name: Case ID
+        quote: true
+        tests:
+          - not_null
       - name: Business Area
       - name: Date Created
+        quote: true
+        tests:
+          - not_null
       - name: Date Received
-      - name: Completed
+      - name: Closed
+        quote: true
+        tests:
+          - not_null
       - name: Date Completed
       - name: Responded
       - name: Date Responded
       - name: Day
+        quote: true
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+  - name: comp_intake_and_output
+    columns:
+      - name: Case ID
+        quote: true
+        tests:
+          - not_null
+      - name: Business Area
+      - name: Date Created
+        quote: true
+        tests:
+          - not_null
+      - name: Date Received
+      - name: Closed
+        quote: true
+        tests:
+          - not_null
+      - name: Date Completed
+      - name: Responded
+      - name: Date Responded
+      - name: Day
+        quote: true
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+  - name: comp2_intake_and_output
+    columns:
+      - name: Case ID
+        quote: true
+        tests:
+          - not_null
+      - name: Business Area
+      - name: Date Created
+        quote: true
+        tests:
+          - not_null
+      - name: Date Received
+      - name: Closed
+        quote: true
+        tests:
+          - not_null
+      - name: Date Completed
+      - name: Responded
+      - name: Date Responded
+      - name: Day
+        quote: true
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
