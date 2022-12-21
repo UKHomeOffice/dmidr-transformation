@@ -4,14 +4,126 @@ models:
   - name: mpam_aggregate_closed_cases
     columns:
       - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
       - name: Cases closed inside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
       - name: Cases closed outside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
   - name: mpam_aggregate_closed_cases_by_age 
     columns:
       - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
       - name: Age (days)
+        quote: true
+        tests: 
+          - greater_than_zero
   - name: mpam_aggregate_closed_cases_by_outcome
     columns:
       - name: Upheld
+        quote: true
+        tests: 
+          - greater_than_zero
       - name: Partially upheld
+        quote: true
+        tests: 
+          - greater_than_zero
       - name: Not upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+  - name: comp_aggregate_closed_cases
+    columns:
+      - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Cases closed inside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
+      - name: Cases closed outside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
+  - name: comp_aggregate_closed_cases_by_age 
+    columns:
+      - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Age (days)
+        quote: true
+        tests: 
+          - greater_than_zero
+  - name: comp_aggregate_closed_cases_by_outcome
+    columns:
+      - name: Upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Partially upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Not upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+  - name: comp2_aggregate_closed_cases
+    columns:
+      - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Cases closed inside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
+      - name: Cases closed outside of service standard
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases closed
+  - name: comp2_aggregate_closed_cases_by_age 
+    columns:
+      - name: Total cases closed
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Age (days)
+        quote: true
+        tests: 
+          - greater_than_zero
+  - name: comp2_aggregate_closed_cases_by_outcome
+    columns:
+      - name: Upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Partially upheld
+        quote: true
+        tests: 
+          - greater_than_zero
+      - name: Not upheld
+        quote: true
+        tests: 
+          - greater_than_zero
