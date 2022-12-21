@@ -4,24 +4,61 @@ models:
   - name: mpam_due_cases
     columns:
       - name: CTSRef
+        quote: true
+        tests:
+          - not_null
       - name: Case Created Date
+        quote: true
+        tests:
+          - not_null
       - name: Business Area
       - name: Current Handler User Id
       - name: Due Date
+        quote: true
+        tests:
+          - not_null
       - name: Workflow
       - name: Directorate
       - name: Signee
       - name: Stage
       - name: Day
+        quote: true
+        tests:
+          - accepted_values:
+              values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   - name: mpam_due_cases_aggregate
     columns:
       - name: Total due this week
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total due next 4 weeks
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total out of service standard
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total cases
+        quote: true
+        tests:
+          - greater_than_zero      
   - name: comp_due_cases
     columns:
       - name: Case Reference
+        quote: true
+        tests:
+          - not_null
       - name: Owning CSU
       - name: Business Area
       - name: Location
@@ -31,16 +68,46 @@ models:
       - name: Status
       - name: Current Handler User Id
       - name: Due Date
+        quote: true
+        tests:
+          - not_null
       - name: Case Created Date
+        quote: true
+        tests:
+          - not_null
   - name: comp_due_cases_aggregate
     columns:
       - name: Total due this week
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total due next 4 weeks
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total out of service standard
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total cases
+        quote: true
+        tests:
+          - greater_than_zero
   - name: comp2_due_cases
     columns:
       - name: Case Reference
+        quote: true
+        tests:
+          - not_null
       - name: Owning CSU
       - name: Business Area
       - name: Location
@@ -50,10 +117,37 @@ models:
       - name: Status
       - name: Current Handler User Id
       - name: Due Date
+        quote: true
+        tests:
+          - not_null
       - name: Case Created Date
+        quote: true
+        tests:
+          - not_null
   - name: comp2_due_cases_aggregate
     columns:
       - name: Total due this week
+        quote: true
+        tests: 
+          - greater_than_zero
+          - not_more_than_max_weekly:
+              base_table: ref('merged_cases')
+              base_date_field: case_deadline
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total due next 4 weeks
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total out of service standard
+        quote: true
+        tests:
+          - greater_than_zero
+          - not_higher_than:
+              max_value_column: Total cases
       - name: Total cases
+        quote: true
+        tests:
+          - greater_than_zero

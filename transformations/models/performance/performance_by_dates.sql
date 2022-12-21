@@ -23,10 +23,11 @@ date_dimension AS (
 )
 
 
+
 SELECT Date,
-       t1.user_group,
-       COALESCE("Amount Answered On Time", 0) AS "Amount Answered On Time",
-       COALESCE("Amount Due", 0) AS "Amount Due"
+    t1.user_group,
+    COALESCE("Amount Answered On Time", 0) AS "Amount Answered On Time",
+    COALESCE("Amount Due", 0) AS "Amount Due"
 
 FROM due_by_date t1
 
