@@ -13,7 +13,7 @@ It will then push the image to the [quay repository][quay_repository], tagged wi
 1. The creation of a tag in the github repository will trigger the [drone pipeline][drone_pipeline] to run and deploy the image to the kubernetes cluster.
 
 # Getting started
-1.Set up virtual env
+1. Set up virtual env
 
 ```
 $ make build
@@ -33,4 +33,9 @@ $ make shell-transform
 $ psql -Upostgres
 $ \c transformation
 $ select * from transformation.audit_event;
+```
+
+4. Run tests. Tests are output locally to a ./transformations/targets/ directory. You can view all runs, all compiled SQL, and all error, warn, and failure exceptions within there.
+```
+$ make test
 ```
