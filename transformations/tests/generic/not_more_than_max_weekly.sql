@@ -8,7 +8,7 @@ with base_table_count as (
 
 select {{ column_name }}
 from {{ model }}
-where {{ column_name }} <= (select max_weekly_count from base_table_count limit 1)
+where {{ column_name }} > (select max_weekly_count from base_table_count limit 1)
 and {{ column_name }} != 0
 
 {% endtest %}

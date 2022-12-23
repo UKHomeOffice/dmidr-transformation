@@ -9,3 +9,5 @@ transformations/logs
 transformations/dbt_packages
 transformations/targets
 transformations/dbt-logs
+transformations/tests/__pycache__
+transformations/tests/.pytest_cache
