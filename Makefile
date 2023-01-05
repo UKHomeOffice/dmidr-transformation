@@ -13,6 +13,9 @@ serve:
 test:
 	${DOCKER_COMPOSE} run --rm etl-process /.venv/bin/dbt test --project-dir ./transformations/ --profiles-dir ./transformations/profiles/
 
+testpy:
+	${DOCKER_COMPOSE} run --rm etl-process /.venv/bin/python -m pytest ./transformations/tests/
+
 stop:
 	${DOCKER_COMPOSE} down
 
