@@ -1,5 +1,4 @@
 SELECT Date,
-       user_group,
        business_area,
        "Total completed",
        "Total responded",
