@@ -8,7 +8,7 @@ WITH created_count AS (
 
     WHERE date_created IS NOT NULL
 
-    GROUP BY business_area, date_created
+    GROUP BY user_group, business_area, date_created
 ),
 received_count AS (
     SELECT user_group,
@@ -20,7 +20,7 @@ received_count AS (
 
     WHERE date_received IS NOT NULL
 
-    GROUP BY business_area, date_received
+    GROUP BY user_group, business_area, date_received
 ),
 completed_count AS (
     SELECT user_group,
@@ -32,7 +32,7 @@ completed_count AS (
 
     WHERE date_completed IS NOT NULL
 
-    GROUP BY business_area, date_completed
+    GROUP BY user_group, business_area, date_completed
 ),
 responded_count AS (
     SELECT user_group,
@@ -44,10 +44,10 @@ responded_count AS (
 
     WHERE date_responded IS NOT NULL
 
-    GROUP BY business_area, date_responded
+    GROUP BY user_group, business_area, date_responded
 ),
 grouped_counts AS (
-    SELECT crc.date_created AS date,
+    SELECT crc.date_created AS Date,
            crc.business_area,
            crc.user_group,
            "Total created",
@@ -60,11 +60,11 @@ grouped_counts AS (
     FULL JOIN
     received_count recc
     ON
-    crc.user_group = rc.user_group
+    crc.user_group = recc.user_group
     AND
-    crc.business_area = crc.business_area
+    crc.business_area = recc.business_area
     AND
-    crc.date_created = rc.date_received
+    crc.date_created = recc.date_received
 
     FULL JOIN
     completed_count coc
@@ -88,4 +88,17 @@ date_dimension AS (
     SELECT generate_series(date_trunc('week', NOW()::timestamp), date_trunc('week', NOW()::timestamp) + interval '7 day', '1 day'::interval)::date as Date
 )
 
-SELECT * FROM grouped_counts
+SELECT dd.Date,
+       gc.user_group,
+       gc.business_area,
+       gc."Total completed",
+       gc."Total responded",
+       gc."Total received",
+       gc."Total created"
+
+FROM grouped_counts gc
+
+RIGHT OUTER JOIN
+date_dimension dd
+ON
+gc.Date = dd.Date

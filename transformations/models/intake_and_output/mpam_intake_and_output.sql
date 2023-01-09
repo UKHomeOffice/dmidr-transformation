@@ -1,13 +1,11 @@
-SELECT "Case ID",
-       "Business Area",
-       "Date Created",
-       "Date Recieved",
-       "Closed",
-       "Date Closed",
-       "Responded",
-       "Date Responded",
-       "Day"
+SELECT Date,
+       user_group,
+       business_area,
+       "Total completed",
+       "Total responded",
+       "Total received",
+       "Total created"
 
-FROM {{ ref('intake_and_output') }}
+FROM {{ ref('intake_and_output_by_dates') }}
 
 WHERE user_group = 'MPAM'
