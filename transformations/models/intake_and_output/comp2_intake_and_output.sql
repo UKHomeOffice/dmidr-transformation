@@ -1,5 +1,5 @@
 SELECT Date,
-       business_area,
+       "Business Area",
        "Total completed",
        "Total responded",
        "Total received",

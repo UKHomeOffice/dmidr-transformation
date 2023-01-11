@@ -90,7 +90,7 @@ date_dimension AS (
 
 SELECT dd.Date,
        gc.user_group,
-       gc.business_area,
+       gc.business_area AS "Business Area",
        gc."Total completed",
        gc."Total responded",
        gc."Total received",
