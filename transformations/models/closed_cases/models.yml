@@ -43,6 +43,7 @@ models:
         quote: true
         tests: 
           - greater_than_zero
+      - name: Business Area
   - name: comp_aggregate_closed_cases
     columns:
       - name: Total cases closed
@@ -85,6 +86,7 @@ models:
         quote: true
         tests: 
           - greater_than_zero
+      - name: Business Area
   - name: comp2_aggregate_closed_cases
     columns:
       - name: Total cases closed
@@ -127,3 +129,4 @@ models:
         quote: true
         tests: 
           - greater_than_zero
+      - name: Business Area
