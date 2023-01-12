@@ -39,3 +39,5 @@ $ select * from transformation.audit_event;
 ```
 $ make test
 ```
+
+5. Building More Models: view the transformation model help [here](./transformations/readme.md)
