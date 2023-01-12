@@ -51,7 +51,7 @@ def extract_data():
                 replica_cursor.execute(SELECT_QUERY)
 
                 while True:
-                    records = replica_cursor.fetchmany(size=100)
+                    records = replica_cursor.fetchmany(size=10)
 
                     if not records:
                         break
